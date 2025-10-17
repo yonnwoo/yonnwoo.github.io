@@ -96,11 +96,12 @@ body {
 .main-nav a:hover {
     color: #9dbded;
 }
-
+#main-content {
+    color: #cfcfcf;
+}
 /* 메인 콘텐츠 영역 여백 */
 main {
     padding: 1.25rem; /* 20px */
-    color: #cfcfcf;
 }
 /* 홈페이지 스타일 */
 .hometext {
