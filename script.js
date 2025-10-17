@@ -282,10 +282,10 @@ function toggleMusic() {
 
         if (playerState === YT.PlayerState.PLAYING) {
             player.pauseVideo(); // 재생 중이면 일시정지
-            musicButton.textContent = '🔇'; // 음소거 아이콘으로 변경
+            musicButton.textContent = '⏸'; // 음소거 아이콘으로 변경
         } else {
             player.playVideo(); // 정지 상태면 재생
-            musicButton.textContent = '🔊'; // 소리 아이콘으로 변경
+            musicButton.textContent = '♪'; // 소리 아이콘으로 변경
         }
     }
 }
