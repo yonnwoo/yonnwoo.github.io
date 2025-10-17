@@ -66,17 +66,17 @@ fetch(url)
         const weatherId = data.weather[0].id; // 날씨 상태 코드
 
         if (weatherId >= 200 && weatherId < 300) {
-            weatherIcon.innerText = '☈'; // 뇌우
+            weatherIcon.innerText = '☈\uFE0E ☈\uFE0E ☈\uFE0E'; // 뇌우
         } else if (weatherId >= 300 && weatherId < 600) {
-            weatherIcon.innerText = '☂ ☂ ☂'; // 비
+            weatherIcon.innerText = '☂\uFE0E ☂\uFE0E ☂\uFE0E'; // 비
         } else if (weatherId >= 600 && weatherId < 700) {
-            weatherIcon.innerText = '☃'; // 눈
+            weatherIcon.innerText = '☃\uFE0E ☃\uFE0E ☃\uFE0E'; // 눈
         } else if (weatherId >= 700 && weatherId < 800) {
-            weatherIcon.innerText = '~'; // 안개
+            weatherIcon.innerText = '~ ~ ~'; // 안개
         } else if (weatherId === 800) {
-            weatherIcon.innerText = '☼'; // 맑음
+            weatherIcon.innerText = '☼\uFE0E ☼\uFE0E ☼\uFE0E'; // 맑음
         } else if (weatherId > 800) {
-            weatherIcon.innerText = '☁'; // 흐림
+            weatherIcon.innerText = '☁\uFE0E ☁\uFE0E ☁\uFE0E'; // 흐림
         }
     })
     .catch(error => {
