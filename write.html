@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기 페이지 (Admin)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main style="padding: 30px;">
+        <h2>새 블로그 글 작성</h2>
+        
+        <form id="write-form">
+            <label for="post-title">제목:</label>
+            <input type="text" id="post-title" required>
+            
+            <label for="post-content">내용:</label>
+            <textarea id="post-content" rows="15" required></textarea>
+            
+            <button type="submit">게시글 저장하기</button>
+        </form>
+
+        <p id="status-message"></p>
+        <a href="index.html">← 메인 페이지로 돌아가기</a>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        const SUPABASE_URL = 'https://iuvgxecoxpkhrklfaail.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1dmd4ZWNveHBraHJrbGZhYWlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2OTAwODksImV4cCI6MjA3NjI2NjA4OX0.lcyTqGEm6QV_Ogdlv0gzEKZQPFogE9psDhFzu1Q-G9Y';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </giscus-widget>
+
+    <script>
+        const writeForm = document.getElementById('write-form');
+        const statusMessage = document.getElementById('status-message');
+
+        // 폼이 제출되면 savePost 함수를 실행
+        writeForm.addEventListener('submit', savePost);
+
+        async function savePost(event) {
+            event.preventDefault();
+            statusMessage.textContent = '저장하는 중...';
+
+            const titleInput = document.getElementById('post-title');
+            const contentInput = document.getElementById('post-content');
+
+            // 입력된 제목과 내용을 Supabase의 'posts' 테이블에 저장
+            const { data, error } = await supabase
+                .from('posts')
+                .insert([
+                    { title: titleInput.value, content: contentInput.value }
+                ]);
+
+            if (error) {
+                console.error('저장 중 에러 발생:', error);
+                statusMessage.textContent = `에러 발생: ${error.message}`;
+                statusMessage.style.color = 'red';
+            } else {
+                console.log('게시글이 성공적으로 저장되었습니다:', data);
+                statusMessage.textContent = '게시글이 성공적으로 저장되었습니다!';
+                statusMessage.style.color = 'green';
+                
+                // 저장 후 입력창 비우기
+                titleInput.value = '';
+                contentInput.value = '';
+            }
+        }
+    </script>
+    
+</body>
+</html>

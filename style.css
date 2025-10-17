@@ -175,3 +175,33 @@ main {
     cursor: pointer;
     border-radius: 5px;
 }
+/* 글쓰기 폼 스타일 */
+#write-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#write-form label {
+    font-weight: bold;
+}
+
+#write-form input, #write-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+}
+
+#write-form button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
