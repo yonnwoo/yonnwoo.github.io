@@ -115,7 +115,7 @@ main {
 
 #guestbook-form input, #guestbook-form textarea {
     padding: 0.625rem; /* 10px */
-    border: 1px solid #ccc; /* border는 px 유지 */
+    border: 1px dashed color: #cfcfcf;; /* border는 px 유지 */
     border-radius: 0.3125rem; /* 5px */
 }
 
@@ -131,7 +131,7 @@ main {
     background-color: #9dbded;
     color: white;
     border: none;
-    border-radius: 0.3125rem; /* 5px */
+    border-radius: 0.3rem; /* 5px */
     cursor: pointer;
 }
 
