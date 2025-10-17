@@ -72,7 +72,9 @@ body {
     font-size: 0.9375rem; /* 15px */
     font-weight: medium;
 }
-
+.logo a:hover {
+    color: #9dbded;
+}
 /* 메뉴(오른쪽) 디자인 */
 .main-nav ul {
     list-style: none;
