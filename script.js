@@ -88,39 +88,58 @@ fetch(url)
     // ===================================================
 
 // ===================================================
-// 3. 방명록 기능 (Cusdis 사용)
+//// ===================================================
+// (Firebase 초기화 코드는 HTML에 추가)
+
+// ===================================================
+// 3. 방명록 기능 (Firebase 사용) - 완전한 자유!
 // ===================================================
 
-function showGuestbook() {
-    // 1. 방명록 기본 HTML 구조를 main-content에 넣기
+// 이 함수는 이제 우리가 직접 만듭니다.
+async function showGuestbook() {
+    // 1. 레이아웃과 입력창은 우리 마음대로 HTML/CSS로 디자인합니다.
     mainContent.innerHTML = `
-        <h2>방명록</h2>
-        <p>자유롭게 글을 남겨주세요!</p>
-        
-        <div id="cusdis_thread"
-          data-host="https://cusdis.com"
-          data-app-id="812bc256-e058-4abb-874c-65b8e0ee7854"
-          data-page-id="guestbook"
-          data-page-url="/guestbook"
-          data-page-title="방명록"
-        ></div>
-    `;
-
-    // 2. Cusdis 스크립트를 동적으로 불러오기
-    // 이전에 불러온 스크립트가 있다면 제거
-    const oldScript = document.getElementById('cusdis-script');
-    if (oldScript) {
-        oldScript.remove();
-    }
-
-    // 새로운 스크립트 추가
-    const script = document.createElement('script');
-    script.id = 'cusdis-script';
-    script.async = true;
-    script.src = 'https://cusdis.com/js/cusdis.es.js';
-    document.head.appendChild(script);
+        <h2>방명록 (직접 만든 버전)</h2>
+        <form id="firebase-form">
+            <input type="text" id="guest-name" placeholder="이름" required>
+            <textarea id="guest-message" placeholder="메시지" required></textarea>
+            <button type="submit">글 남기기</button>
+        </form>
+        <div id="firebase-entries"></div> `;
+    
+    // 2. 폼 제출 이벤트를 직접 처리
+    document.getElementById('firebase-form').addEventListener('submit', saveEntryToFirebase);
+    
+    // 3. Firebase에서 글 목록을 불러와서 화면에 표시
+    await loadEntriesFromFirebase();
 }
 
-// saveEntry, loadEntries 함수는 이제 필요 없으니 지워도 됩니다.
+// Firebase에 데이터를 저장하는 함수
+async function saveEntryToFirebase(event) {
+    event.preventDefault();
+    const name = document.getElementById('guest-name').value;
+    const message = document.getElementById('guest-message').value;
 
+    // Firebase의 "entries"라는 컬렉션에 데이터 추가
+    // await db.collection("entries").add({ name: name, message: message, date: new Date() });
+    
+    // 저장 후 목록 새로고침
+    await loadEntriesFromFirebase();
+}
 
+// Firebase에서 데이터를 불러오는 함수
+async function loadEntriesFromFirebase() {
+    const entriesDiv = document.getElementById('firebase-entries');
+    entriesDiv.innerHTML = ''; // 기존 목록 비우기
+    
+    // Firebase의 "entries" 컬렉션에서 모든 문서 가져오기
+    // const querySnapshot = await db.collection("entries").orderBy("date", "desc").get();
+    
+    // querySnapshot.forEach(doc => {
+    //     // 받아온 데이터로 HTML 요소를 직접 만들어서 추가
+    //     // const entry = doc.data();
+    //     // const newDiv = document.createElement('div');
+    //     // newDiv.innerHTML = `<p><strong>${entry.name}</strong>: ${entry.message}</p>`;
+    //     // entriesDiv.appendChild(newDiv);
+    // });
+}
