@@ -118,10 +118,18 @@ main {
 }
 
 .entry {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px dashed #eee;
     padding: 15px 0;
 }
 
 .entry p {
     margin: 5px 0;
+}
+
+#weather-icon {
+    color: #9dbded;
+}
+
+#main-content {
+    color: #cfcfcf; /* 글자색 */
 }

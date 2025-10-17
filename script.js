@@ -96,8 +96,8 @@ fetch(url)
 function showGuestbook() {
     // HTML 레이아웃은 Firebase 버전과 동일하게 사용합니다.
     mainContent.innerHTML = `
-        <h2>방명록</h2>
-        <p>Supabase로 만든 방명록입니다. 디자인을 자유롭게 제어할 수 있습니다!</p>
+        <h3>방명록</h3>
+        <p>욕은 삼가해주세요</p>
         
         <form id="guestbook-form">
             <input type="text" id="guest-name" placeholder="이름" required>
@@ -166,7 +166,7 @@ async function loadEntries() {
         const date = new Date(entry.created_at).toLocaleString();
 
         entryDiv.innerHTML = `
-            <p><strong>${entry.name}</strong> (${date})</p>
+            <p><b>${entry.name}</b> <i>(${date})</i></p>
             <p>${entry.message}</p>
         `;
         entriesDiv.appendChild(entryDiv);
