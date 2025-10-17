@@ -7,21 +7,32 @@
 
     /* 헤더 스타일 변경 */
     .main-header {
-        flex-direction: row;    /* 가로 방향 유지 */
-        flex-wrap: wrap;        /* 공간 부족 시 줄바꿈 허용 (추가) */
-        justify-content: center;/* 아이템들을 가운데 정렬 (추가) */
-        padding: 15px 10px;     /* 좌우 여백을 크게 줄임 (수정) */
-        gap: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 15px 10px;
+        gap: 15px; /* 상단 아이템과 메뉴 사이 간격을 조금 줄임 */
     }
 
-    /* 내비게이션 메뉴 스타일 변경 */
+    /* 내비게이션 메뉴 컨테이너 (추가됨) */
+    .main-nav {
+        width: 100%; /* 메뉴 컨테이너의 너비를 100%로 설정 */
+    }
+
+    /* 내비게이션 메뉴 목록 (수정됨) */
     .main-nav ul {
-        flex-direction: row;    /* 가로 방향 유지 */
+        flex-direction: row;
         padding: 0;
+        justify-content: center; /* ul 안의 메뉴 아이템들을 가운데 정렬 */
     }
     
     .main-nav li {
-        margin-left: 20px;      /* 메뉴 사이 간격을 줄임 (수정) */
+        margin-left: 20px;
+    }
+
+    /* 첫 번째 메뉴 아이템의 왼쪽 여백 제거 (추가됨) */
+    .main-nav li:first-child {
+        margin-left: 0;
     }
 
     /* 메인 콘텐츠 영역 여백 줄이기 */
