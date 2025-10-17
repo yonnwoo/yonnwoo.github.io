@@ -24,7 +24,7 @@ function showAbout() {
 // 'Blog' 콘텐츠를 보여주는 함수
 function showBlog() {
     mainContent.innerHTML = `
-        <h2>블로그</h2>
+        <h3>블로그</h3>
         <article>
             <p>첫 번째 글</p>
             <p>블로그 글 내용입니다...</p>
