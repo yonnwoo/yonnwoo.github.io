@@ -127,7 +127,7 @@ main {
 
 #guestbook-form button {
     align-self: flex-start;
-    padding: 0.9375rem; /* 15px */
+    padding: 1rem; /* 15px */
     background-color: #9dbded;
     color: white;
     border: none;
@@ -137,16 +137,16 @@ main {
 
 /* 방명록 글 목록 스타일 */
 #guestbook-entries {
-    margin-top: 1.875rem; /* 30px */
+    margin-top: 2rem; /* 30px */
 }
 
 .entry {
     border-bottom: 1px solid #eee; /* border는 px 유지 */
-    padding: 0.9375rem 0; /* 15px 0 */
+    padding: 1rem 0; /* 15px 0 */
 }
 
 .entry p {
-    margin: 0.3125rem 0; /* 5px 0 */
+    margin: 0.3rem 0; /* 5px 0 */
 }
 
 /* 블로그 게시물 목록 스타일 */
@@ -157,7 +157,7 @@ main {
 
 .post-list-ul li a {
     display: block;
-    padding: 0.9375rem; /* 15px */
+    padding: 1rem; /* 15px */
     border-bottom: 1px solid #eee; /* border는 px 유지 */
     text-decoration: none;
     color: #333;
@@ -195,7 +195,7 @@ main {
 #write-form {
     display: flex;
     flex-direction: column;
-    gap: 0.9375rem; /* 15px */
+    gap: 1rem; /* 15px */
     margin-bottom: 1.25rem; /* 20px */
 }
 
@@ -207,7 +207,7 @@ main {
     width: 100%;
     padding: 0.625rem; /* 10px */
     border: 1px solid #ccc; /* border는 px 유지 */
-    border-radius: 0.3125rem; /* 5px */
+    border-radius: 0.3rem; /* 5px */
     box-sizing: border-box;
 }
 
@@ -217,7 +217,7 @@ main {
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 0.3125rem; /* 5px */
+    border-radius: 0.3rem; /* 5px */
     cursor: pointer;
     font-size: 1rem; /* 16px */
 }
