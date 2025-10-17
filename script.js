@@ -71,7 +71,7 @@ fetch(url)
         if (weatherId >= 200 && weatherId < 300) {
             weatherIcon.innerText = '☈'; // 뇌우
         } else if (weatherId >= 300 && weatherId < 600) {
-            weatherIcon.innerText = '☂'; // 비
+            weatherIcon.innerText = '☂ ☂ ☂'; // 비
         } else if (weatherId >= 600 && weatherId < 700) {
             weatherIcon.innerText = '☃'; // 눈
         } else if (weatherId >= 700 && weatherId < 800) {
