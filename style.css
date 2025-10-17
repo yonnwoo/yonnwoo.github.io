@@ -236,7 +236,7 @@ main {
     color: #cfcfcf; /* 흐림: 연한 회색 */
 }
 .weather-rain {
-    color: #4682B4; /* 비: 강철 파란색 */
+    color: #9dbded; /* 비: 강철 파란색 */
 }
 .weather-thunderstorm {
     color: #4B0082; /* 뇌우: 남색 */
@@ -245,7 +245,7 @@ main {
     color: #ADD8E6; /* 눈: 연한 파란색 */
 }
 .weather-mist {
-    color: #778899; /* 안개: 밝은 회색 */
+    color: #cfcfcf; /* 안개: 밝은 회색 */
 }
 
 /* 날씨 아이콘과 음악 버튼을 묶는 컨테이너 */
