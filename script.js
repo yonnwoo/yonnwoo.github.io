@@ -88,58 +88,87 @@ fetch(url)
     // ===================================================
 
 // ===================================================
-//// ===================================================
-// (Firebase 초기화 코드는 HTML에 추가)
-
 // ===================================================
-// 3. 방명록 기능 (Firebase 사용) - 완전한 자유!
+// 3. 방명록 기능 (Supabase 사용 - 완전한 자유!)
 // ===================================================
 
-// 이 함수는 이제 우리가 직접 만듭니다.
-async function showGuestbook() {
-    // 1. 레이아웃과 입력창은 우리 마음대로 HTML/CSS로 디자인합니다.
+// 방명록 화면을 보여주는 메인 함수
+function showGuestbook() {
+    // HTML 레이아웃은 Firebase 버전과 동일하게 사용합니다.
     mainContent.innerHTML = `
-        <h2>방명록 (직접 만든 버전)</h2>
-        <form id="firebase-form">
+        <h2>방명록</h2>
+        <p>Supabase로 만든 방명록입니다. 디자인을 자유롭게 제어할 수 있습니다!</p>
+        
+        <form id="guestbook-form">
             <input type="text" id="guest-name" placeholder="이름" required>
-            <textarea id="guest-message" placeholder="메시지" required></textarea>
+            <textarea id="guest-message" placeholder="메시지를 입력하세요..." required></textarea>
             <button type="submit">글 남기기</button>
         </form>
-        <div id="firebase-entries"></div> `;
-    
-    // 2. 폼 제출 이벤트를 직접 처리
-    document.getElementById('firebase-form').addEventListener('submit', saveEntryToFirebase);
-    
-    // 3. Firebase에서 글 목록을 불러와서 화면에 표시
-    await loadEntriesFromFirebase();
+        
+        <div id="guestbook-entries">
+            <p>로딩 중...</p>
+        </div>
+    `;
+
+    document.getElementById('guestbook-form').addEventListener('submit', saveEntry);
+    loadEntries();
 }
 
-// Firebase에 데이터를 저장하는 함수
-async function saveEntryToFirebase(event) {
+// 폼에 작성된 글을 Supabase에 저장하는 함수
+async function saveEntry(event) {
     event.preventDefault();
-    const name = document.getElementById('guest-name').value;
-    const message = document.getElementById('guest-message').value;
 
-    // Firebase의 "entries"라는 컬렉션에 데이터 추가
-    // await db.collection("entries").add({ name: name, message: message, date: new Date() });
-    
-    // 저장 후 목록 새로고침
-    await loadEntriesFromFirebase();
+    const nameInput = document.getElementById('guest-name');
+    const messageInput = document.getElementById('guest-message');
+
+    // supabase.from("entries")는 "entries"라는 이름의 표를 의미
+    const { data, error } = await supabase
+        .from('entries')
+        .insert([
+            { name: nameInput.value, message: messageInput.value }
+        ]);
+
+    if (error) {
+        console.error('저장 중 에러 발생:', error);
+    } else {
+        console.log('글이 성공적으로 저장되었습니다:', data);
+        nameInput.value = '';
+        messageInput.value = '';
+        loadEntries(); // 저장 후 목록 새로고침
+    }
 }
 
-// Firebase에서 데이터를 불러오는 함수
-async function loadEntriesFromFirebase() {
-    const entriesDiv = document.getElementById('firebase-entries');
-    entriesDiv.innerHTML = ''; // 기존 목록 비우기
+// Supabase에서 글 목록을 불러와 화면에 표시하는 함수
+async function loadEntries() {
+    const entriesDiv = document.getElementById('guestbook-entries');
+    entriesDiv.innerHTML = '';
+
+    // "entries" 표에서 모든 데이터(*)를 'created_at' 기준으로 내림차순 정렬해서 선택
+    const { data, error } = await supabase
+        .from('entries')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('데이터 로딩 중 에러 발생:', error);
+        return;
+    }
     
-    // Firebase의 "entries" 컬렉션에서 모든 문서 가져오기
-    // const querySnapshot = await db.collection("entries").orderBy("date", "desc").get();
-    
-    // querySnapshot.forEach(doc => {
-    //     // 받아온 데이터로 HTML 요소를 직접 만들어서 추가
-    //     // const entry = doc.data();
-    //     // const newDiv = document.createElement('div');
-    //     // newDiv.innerHTML = `<p><strong>${entry.name}</strong>: ${entry.message}</p>`;
-    //     // entriesDiv.appendChild(newDiv);
-    // });
+    if (data.length === 0) {
+        entriesDiv.innerHTML = "<p>아직 등록된 글이 없습니다.</p>";
+        return;
+    }
+
+    data.forEach(entry => {
+        const entryDiv = document.createElement('div');
+        entryDiv.className = 'entry';
+        
+        const date = new Date(entry.created_at).toLocaleString();
+
+        entryDiv.innerHTML = `
+            <p><strong>${entry.name}</strong> (${date})</p>
+            <p>${entry.message}</p>
+        `;
+        entriesDiv.appendChild(entryDiv);
+    });
 }
