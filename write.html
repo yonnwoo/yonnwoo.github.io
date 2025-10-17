@@ -29,8 +29,9 @@
     <script>
         const SUPABASE_URL = 'https://iuvgxecoxpkhrklfaail.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1dmd4ZWNveHBraHJrbGZhYWlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2OTAwODksImV4cCI6MjA3NjI2NjA4OX0.lcyTqGEm6QV_Ogdlv0gzEKZQPFogE9psDhFzu1Q-G9Y';
+        // 오류의 원인이었던 </giscus-widget> 태그를 삭제했습니다.
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    </giscus-widget>
+    </script>
 
     <script>
         const writeForm = document.getElementById('write-form');
