@@ -160,7 +160,7 @@ main {
     padding: 1rem; /* 15px */
     border-bottom: 1px solid #eee; /* border는 px 유지 */
     text-decoration: none;
-    color: #333;
+    color: #cfcfcf;
 }
 
 .post-list-ul li a:hover {
@@ -174,7 +174,7 @@ main {
 
 .post-view .post-meta {
     font-size: 0.875rem; /* 14px */
-    color: #888;
+    color: #cfcfcf;
     margin-bottom: 1.25rem; /* 20px */
 }
 
