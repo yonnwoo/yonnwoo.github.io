@@ -240,7 +240,7 @@ async function loadEntries() {
 // ===================================================
 
 // 유튜브 영상 ID를 여기에 넣으세요 (저작권 없는 음악 추천!)
-const YOUTUBE_VIDEO_ID = '5qap5aO4i9A'; // 예시: Lofi Girl
+const YOUTUBE_VIDEO_ID = 'ta4WEBJFX6k'; // 예시: Lofi Girl
 
 // 1. 유튜브 API 스크립트를 비동기적으로 로드합니다.
 const tag = document.createElement('script');

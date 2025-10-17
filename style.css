@@ -247,3 +247,17 @@ main {
 .weather-mist {
     color: #778899; /* 안개: 밝은 회색 */
 }
+
+/* 날씨 아이콘과 음악 버튼을 묶는 컨테이너 */
+.header-center-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* 아이콘들 사이의 간격 */
+}
+
+/* 음악 버튼 스타일 */
+.music-button {
+    font-size: 1.2rem; /* 아이콘 크기 */
+    cursor: pointer;   /* 마우스를 올리면 손가락 모양으로 */
+    user-select: none; /* 클릭 시 텍스트가 선택되지 않도록 */
+}
