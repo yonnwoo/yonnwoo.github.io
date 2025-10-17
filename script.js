@@ -17,9 +17,7 @@ function showHome() {
 // 'About' 콘텐츠를 보여주는 함수
 function showAbout() {
     mainContent.innerHTML = `
-        <h2>소개</h2>
         <p>저에 대한 소개를 적는 공간입니다.</p>
-        <p>저는 개발 공부를 하고 있습니다.</p>
     `;
 }
 
@@ -28,11 +26,11 @@ function showBlog() {
     mainContent.innerHTML = `
         <h2>블로그</h2>
         <article>
-            <h3>첫 번째 글</h3>
+            <p>첫 번째 글</p>
             <p>블로그 글 내용입니다...</p>
         </article>
         <article>
-            <h3>두 번째 글</h3>
+            <p>두 번째 글</p>
             <p>두 번째 블로그 글 내용입니다...</p>
         </article>
     `;
@@ -41,8 +39,7 @@ function showBlog() {
 // Contact 메뉴가 추가되었을 경우를 대비한 함수
 function showContact() {
     mainContent.innerHTML = `
-        <h2>연락처</h2>
-        <p>여기에 연락처 정보를 남겨주세요.</p>
+        <p>연락처 정보를 남겨주세요.</p>
     `;
 }
 
@@ -158,4 +155,5 @@ function saveEntry(event) {
 
     // 목록 새로고침
     loadEntries();
+
 }
