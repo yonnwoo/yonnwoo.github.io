@@ -10,8 +10,8 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0.9375rem 0.625rem; /* 15px 10px */
-        gap: 0.9375rem; /* 15px */
+        padding: 1rem 0.7rem; /* 15px 10px */
+        gap: 1rem; /* 15px */
     }
 
     /* 내비게이션 메뉴 컨테이너 */
