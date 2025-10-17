@@ -14,6 +14,7 @@
 </div>
 </div>
         <Marquee scrollAmount=1 id="weather-icon">0</Marquee>
+        <span id="music-button" class="music-button">♪</span> </div>
 
         <nav class="main-nav">
             <ul>
@@ -44,6 +45,17 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1dmd4ZWNveHBraHJrbGZhYWlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2OTAwODksImV4cCI6MjA3NjI2NjA4OX0.lcyTqGEm6QV_Ogdlv0gzEKZQPFogE9psDhFzu1Q-G9Y';
 
         // Supabase 클라이언트 초기화 (오류 수정됨)
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
+    
+    <script src="script.js"></script>
+
+    <div id="youtube-player"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        const SUPABASE_URL = 'https://iuvgxecoxpkhrklfaail.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1dmd4ZWNveHBraHJrbGZhYWlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2OTAwODksImV4cCI6MjA3NjI2NjA4OX0.lcyTqGEm6QV_Ogdlv0gzEKZQPFogE9psDhFzu1Q-G9Y';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
     

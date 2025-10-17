@@ -235,3 +235,57 @@ async function loadEntries() {
         entriesDiv.appendChild(entryDiv);
     });
 }
+// ===================================================
+// 4. 유튜브 배경 음악 제어 기능
+// ===================================================
+
+// 유튜브 영상 ID를 여기에 넣으세요 (저작권 없는 음악 추천!)
+const YOUTUBE_VIDEO_ID = '5qap5aO4i9A'; // 예시: Lofi Girl
+
+// 1. 유튜브 API 스크립트를 비동기적으로 로드합니다.
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+const firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// 2. API가 준비되면 이 함수가 호출되어 플레이어를 생성합니다.
+let player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('youtube-player', {
+    height: '0',
+    width: '0',
+    videoId: YOUTUBE_VIDEO_ID,
+    playerVars: {
+      'playsinline': 1,
+      'loop': 1,
+      'playlist': YOUTUBE_VIDEO_ID, // loop를 위해 id를 한번 더 써줍니다.
+      'controls': 0 // 컨트롤러 숨기기
+    }
+  });
+}
+
+// 3. 음악 버튼에 클릭 이벤트 연결하기
+// DOM이 완전히 로드된 후에 실행되도록 해서 버튼을 확실히 찾도록 합니다.
+document.addEventListener('DOMContentLoaded', () => {
+    const musicButton = document.getElementById('music-button');
+    if (musicButton) {
+        musicButton.addEventListener('click', toggleMusic);
+    }
+});
+
+// 4. 음악을 켜고 끄는 함수
+function toggleMusic() {
+    // player 객체가 준비되었는지 확인
+    if (player && typeof player.getPlayerState === 'function') {
+        const musicButton = document.getElementById('music-button');
+        const playerState = player.getPlayerState();
+
+        if (playerState === YT.PlayerState.PLAYING) {
+            player.pauseVideo(); // 재생 중이면 일시정지
+            musicButton.textContent = '🔇'; // 음소거 아이콘으로 변경
+        } else {
+            player.playVideo(); // 정지 상태면 재생
+            musicButton.textContent = '🔊'; // 소리 아이콘으로 변경
+        }
+    }
+}
