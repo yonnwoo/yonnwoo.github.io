@@ -134,3 +134,44 @@ main {
 #main-content {
     color: #cfcfcf; /* 글자색 */
 }
+/* 블로그 게시물 목록 스타일 */
+.post-list-ul {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list-ul li a {
+    display: block;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #cfcfcf;
+}
+
+.post-list-ul li a:hover {
+    background-color: #f9f9f9;
+}
+
+/* 개별 게시물 보기 스타일 */
+.post-view {
+    padding: 10px;
+}
+
+.post-view .post-meta {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.post-view .post-content {
+    line-height: 1.6;
+}
+
+.post-view button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 5px;
+}

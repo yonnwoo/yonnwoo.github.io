@@ -21,19 +21,77 @@ function showAbout() {
     `;
 }
 
-// 'Blog' 콘텐츠를 보여주는 함수
-function showBlog() {
+// 'Blog' 콘텐츠를 보여주는 함수 (게시판 목록)
+async function showBlog() {
     mainContent.innerHTML = `
-        <h3>블로그</h3>
-        <article>
-            <p>첫 번째 글</p>
-            <p>블로그 글 내용입니다...</p>
-        </article>
-        <article>
-            <p>두 번째 글</p>
-            <p>두 번째 블로그 글 내용입니다...</p>
-        </article>
+        <h2>블로그</h2>
+        <div id="post-list">
+            <p>게시글 목록을 불러오는 중...</p>
+        </div>
     `;
+
+    // Supabase의 'posts' 테이블에서 id, title, created_at 열을 가져옵니다.
+    const { data, error } = await supabase
+        .from('posts')
+        .select('id, title, created_at')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('블로그 목록 로딩 중 에러 발생:', error);
+        return;
+    }
+
+    const postListDiv = document.getElementById('post-list');
+    postListDiv.innerHTML = ''; // '로딩 중...' 메시지 제거
+
+    if (data.length === 0) {
+        postListDiv.innerHTML = "<p>아직 작성된 글이 없습니다.</p>";
+        return;
+    }
+    
+    // 게시글 목록을 담을 ul 태그 생성
+    const ul = document.createElement('ul');
+    ul.className = 'post-list-ul'; // CSS용 클래스
+
+    data.forEach(post => {
+        const li = document.createElement('li');
+        // 각 li를 클릭하면 showBlogPost(게시글_id) 함수를 실행
+        li.innerHTML = `<a href="#" onclick="showBlogPost(${post.id})">${post.title}</a>`;
+        ul.appendChild(li);
+    });
+
+    postListDiv.appendChild(ul);
+}
+
+// 특정 게시글 하나를 보여주는 함수
+async function showBlogPost(postId) {
+    mainContent.innerHTML = `<p>게시글을 불러오는 중...</p>`;
+    
+    // 'posts' 테이블에서 특정 id를 가진 글 하나만 선택해서 모든 열(*)을 가져옵니다.
+    const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('id', postId) // 'id'가 postId와 equal(같은) 것을 찾음
+        .single(); // 결과가 하나만 있다고 알려줌
+
+    if (error) {
+        console.error('게시글 로딩 중 에러 발생:', error);
+        mainContent.innerHTML = `<p>게시글을 불러오는 데 실패했습니다.</p>`;
+        return;
+    }
+
+    if (data) {
+        mainContent.innerHTML = `
+            <div class="post-view">
+                <h2>${data.title}</h2>
+                <p class="post-meta">작성일: ${new Date(data.created_at).toLocaleString()}</p>
+                <div class="post-content">
+                    ${data.content.replace(/\n/g, '<br>')}
+                </div>
+                <button onclick="showBlog()">목록으로 돌아가기</button>
+            </div>
+        `;
+    }
 }
 
 // Contact 메뉴가 추가되었을 경우를 대비한 함수
