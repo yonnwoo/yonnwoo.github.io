@@ -125,16 +125,22 @@ fetch(url)
 
         if (weatherId >= 200 && weatherId < 300) {
             weatherIcon.innerText = '☈\uFE0E ☈\uFE0E ☈\uFE0E'; // 뇌우
+            weatherIcon.classList.add('weather-thunderstorm');
         } else if (weatherId >= 300 && weatherId < 600) {
             weatherIcon.innerText = '☂\uFE0E ☂\uFE0E ☂\uFE0E'; // 비
+            weatherIcon.classList.add('weather-rain');
         } else if (weatherId >= 600 && weatherId < 700) {
             weatherIcon.innerText = '☃\uFE0E ☃\uFE0E ☃\uFE0E'; // 눈
+            weatherIcon.classList.add('weather-snow');
         } else if (weatherId >= 700 && weatherId < 800) {
             weatherIcon.innerText = '~ ~ ~'; // 안개
+            weatherIcon.classList.add('weather-mist');
         } else if (weatherId === 800) {
             weatherIcon.innerText = '☼\uFE0E ☼\uFE0E ☼\uFE0E'; // 맑음
+            weatherIcon.classList.add('weather-sunny');
         } else if (weatherId > 800) {
             weatherIcon.innerText = '☁\uFE0E ☁\uFE0E ☁\uFE0E'; // 흐림
+            weatherIcon.classList.add('weather-cloudy');
         }
     })
     .catch(error => {
