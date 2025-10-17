@@ -90,4 +90,23 @@ main {
 
 .entry p {
     margin: 5px 0;
+
+}
+
+/* 날씨 아이콘이 좌우로 움직이는 애니메이션 */
+#weather-icon {
+    /* animation: 이름 시간 움직임방법 반복 방향; */
+    animation: move-side-to-side 5s ease-in-out infinite alternate;
+}
+
+/* 움직임의 실제 내용 정의 */
+@keyframes move-side-to-side {
+    /* 시작 상태 (0%) */
+    from {
+        transform: translateX(-20px); /* 왼쪽으로 20px 이동한 상태에서 시작 */
+    }
+    /* 끝 상태 (100%) */
+    to {
+        transform: translateX(20px);  /* 오른쪽으로 20px 이동하며 끝 */
+    }
 }
