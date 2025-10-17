@@ -89,71 +89,40 @@ fetch(url)
 // 3. 방명록 기능
 // ===================================================
 
+// ===================================================
+// 3. 방명록 기능 (Cusdis 사용)
+// ===================================================
+
 function showGuestbook() {
     // 1. 방명록 기본 HTML 구조를 main-content에 넣기
     mainContent.innerHTML = `
-        <form id="guestbook-form">
-            <input type="text" id="guest-name" placeholder="이름" required>
-            <textarea id="guest-message" placeholder="메시지를 입력하세요..." required></textarea>
-            <button type="submit">글 남기기</button>
-        </form>
+        <h2>방명록</h2>
+        <p>자유롭게 글을 남겨주세요!</p>
         
-        <div id="guestbook-entries"></div>
+        <div id="cusdis_thread"
+          data-host="https://cusdis.com"
+          data-app-id="812bc256-e058-4abb-874c-65b8e0ee7854"
+          data-page-id="guestbook"
+          data-page-url="/guestbook"
+          data-page-title="방명록"
+        ></div>
     `;
 
-    // 2. 저장된 글들을 화면에 표시하기
-    loadEntries();
+    // 2. Cusdis 스크립트를 동적으로 불러오기
+    // 이전에 불러온 스크립트가 있다면 제거
+    const oldScript = document.getElementById('cusdis-script');
+    if (oldScript) {
+        oldScript.remove();
+    }
 
-    // 3. 폼(Form)에 'submit' 이벤트가 발생하면, saveEntry 함수를 실행하도록 연결
-    const guestbookForm = document.getElementById('guestbook-form');
-    guestbookForm.addEventListener('submit', saveEntry);
+    // 새로운 스크립트 추가
+    const script = document.createElement('script');
+    script.id = 'cusdis-script';
+    script.async = true;
+    script.src = 'https://cusdis.com/js/cusdis.es.js';
+    document.head.appendChild(script);
 }
 
-// Local Storage에서 글을 불러와 화면에 보여주는 함수
-function loadEntries() {
-    // 'entries' 라는 이름으로 저장된 데이터가 없으면 빈 배열 '[]'을 사용
-    const entries = JSON.parse(localStorage.getItem('entries')) || [];
-    const entriesDiv = document.getElementById('guestbook-entries');
-    entriesDiv.innerHTML = ''; // 기존 목록을 깨끗하게 비움
+// saveEntry, loadEntries 함수는 이제 필요 없으니 지워도 됩니다.
 
-    // 각각의 글(entry)을 HTML로 만들어서 추가
-    entries.forEach(entry => {
-        const entryDiv = document.createElement('div');
-        entryDiv.className = 'entry'; // CSS 꾸미기를 위해 클래스 이름 추가
-        entryDiv.innerHTML = `
-            <p><strong>${entry.name}</strong> (${new Date(entry.date).toLocaleString()})</p>
-            <p>${entry.message}</p>
-        `;
-        entriesDiv.appendChild(entryDiv);
-    });
-}
 
-// 새로운 글을 Local Storage에 저장하는 함수
-function saveEntry(event) {
-    // 폼(Form)을 제출할 때 페이지가 새로고침되는 기본 동작을 막음
-    event.preventDefault();
-
-    const nameInput = document.getElementById('guest-name');
-    const messageInput = document.getElementById('guest-message');
-    
-    // 새로운 글 객체(Object) 만들기
-    const newEntry = {
-        name: nameInput.value,
-        message: messageInput.value,
-        date: new Date()
-    };
-
-    const entries = JSON.parse(localStorage.getItem('entries')) || [];
-    entries.push(newEntry); // 기존 목록에 새로운 글 추가
-
-    // Local Storage에 다시 저장 (객체를 문자열로 변환해서 저장)
-    localStorage.setItem('entries', JSON.stringify(entries));
-
-    // 입력창 비우기
-    nameInput.value = '';
-    messageInput.value = '';
-
-    // 목록 새로고침
-    loadEntries();
-
-}
