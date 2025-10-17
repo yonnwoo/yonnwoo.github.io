@@ -1,17 +1,17 @@
 /* ============================================== */
-/* 반응형 디자인을 위한 미디어 쿼리 (최종 수정)   */
+/* 반응형 디자인을 위한 미디어 쿼리 (rem 단위)   */
 /* ============================================== */
 
-/* 화면 너비가 768px 이하일 때 적용 (태블릿, 모바일) */
-@media (max-width: 768px) {
+/* 화면 너비가 48rem(768px) 이하일 때 적용 */
+@media (max-width: 48rem) {
 
     /* 헤더 스타일 변경 */
     .main-header {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 15px 10px;
-        gap: 15px;
+        padding: 0.9375rem 0.625rem; /* 15px 10px */
+        gap: 0.9375rem; /* 15px */
     }
 
     /* 내비게이션 메뉴 컨테이너 */
@@ -19,23 +19,23 @@
         width: 100%;
     }
 
-    /* 내비게이션 메뉴 목록 (수정됨) */
+    /* 내비게이션 메뉴 목록 */
     .main-nav ul {
-        justify-content: center; /* 아이템들을 가운데 정렬 */
+        justify-content: center;
     }
     
-    /* li 태그의 개별 margin을 좌우 동일하게 변경 (수정) */
+    /* li 태그의 개별 margin */
     .main-nav li {
-        margin: 0 10px; /* 위아래 0, 좌우 10px 여백 */
+        margin: 0 0.625rem; /* 10px */
     }
 
-    /* 메인 콘텐츠 영역 여백 줄이기 */
+    /* 메인 콘텐츠 영역 여백 */
     main {
-        padding: 15px;
+        padding: 0.9375rem; /* 15px */
     }
     
     h2 {
-        font-size: 24px;
+        font-size: 1.5rem; /* 24px */
     }
 
     /* 방명록 폼을 모바일에서 세로로 쌓기 */
@@ -45,7 +45,7 @@
 }
 
 /* ============================================== */
-/* 기본 스타일 (PC)                 */
+/* 기본 스타일 (PC) (rem 단위)        */
 /* ============================================== */
 
 /* 전체 페이지의 기본 스타일 설정 */
@@ -58,8 +58,8 @@ body {
 .main-header {
     background-color: #ffffff;
     color: #cfcfcf;
-    padding: 10px 40px;
-    border-bottom: 1px dashed #cfcfcf;
+    padding: 0.625rem 2.5rem; /* 10px 40px */
+    border-bottom: 1px dashed #cfcfcf; /* border는 px 유지 */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -69,26 +69,26 @@ body {
 .logo a {
     text-decoration: none;
     color: #cfcfcf;
-    font-size: 15px;
+    font-size: 0.9375rem; /* 15px */
     font-weight: medium;
 }
 
 /* 메뉴(오른쪽) 디자인 */
 .main-nav ul {
     list-style: none;
-    margin: 3px;
-    padding: 2px;
+    margin: 0.1875rem; /* 3px */
+    padding: 0.125rem; /* 2px */
     display: flex;
 }
 
 .main-nav li {
-    margin-left: 36px;
+    margin-left: 2.25rem; /* 36px */
 }
 
 .main-nav a {
     text-decoration: none;
     color: #cfcfcf;
-    font-size: 15px;
+    font-size: 1rem; /* 16px */
 }
 
 .main-nav a:hover {
@@ -97,7 +97,7 @@ body {
 
 /* 메인 콘텐츠 영역 여백 */
 main {
-    padding: 20px;
+    padding: 1.25rem; /* 20px */
 }
 /* 홈페이지 스타일 */
 .hometext {
@@ -105,16 +105,16 @@ main {
 }
 /* 방명록 폼 스타일 */
 #guestbook-form {
-    margin-top: 20px;
+    margin-top: 1.25rem; /* 20px */
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 0.625rem; /* 10px */
 }
 
 #guestbook-form input, #guestbook-form textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 0.625rem; /* 10px */
+    border: 1px solid #ccc; /* border는 px 유지 */
+    border-radius: 0.3125rem; /* 5px */
 }
 
 /* 메시지 입력창만 너비 차지 */
@@ -125,26 +125,26 @@ main {
 
 #guestbook-form button {
     align-self: flex-start;
-    padding: 15px;
+    padding: 0.9375rem; /* 15px */
     background-color: #9dbded;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.3125rem; /* 5px */
     cursor: pointer;
 }
 
 /* 방명록 글 목록 스타일 */
 #guestbook-entries {
-    margin-top: 30px;
+    margin-top: 1.875rem; /* 30px */
 }
 
 .entry {
-    border-bottom: 1px solid #eee;
-    padding: 15px 0;
+    border-bottom: 1px solid #eee; /* border는 px 유지 */
+    padding: 0.9375rem 0; /* 15px 0 */
 }
 
 .entry p {
-    margin: 5px 0;
+    margin: 0.3125rem 0; /* 5px 0 */
 }
 
 /* 블로그 게시물 목록 스타일 */
@@ -155,8 +155,8 @@ main {
 
 .post-list-ul li a {
     display: block;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+    padding: 0.9375rem; /* 15px */
+    border-bottom: 1px solid #eee; /* border는 px 유지 */
     text-decoration: none;
     color: #333;
 }
@@ -167,13 +167,13 @@ main {
 
 /* 개별 게시물 보기 스타일 */
 .post-view {
-    padding: 10px;
+    padding: 0.625rem; /* 10px */
 }
 
 .post-view .post-meta {
-    font-size: 14px;
+    font-size: 0.875rem; /* 14px */
     color: #888;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; /* 20px */
 }
 
 .post-view .post-content {
@@ -181,20 +181,20 @@ main {
 }
 
 .post-view button {
-    margin-top: 20px;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
+    margin-top: 1.25rem; /* 20px */
+    padding: 0.625rem 0.9375rem; /* 10px 15px */
+    border: 1px solid #ccc; /* border는 px 유지 */
     background-color: #f5f5f5;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0.3125rem; /* 5px */
 }
 
 /* 글쓰기 폼 스타일 */
 #write-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 0.9375rem; /* 15px */
+    margin-bottom: 1.25rem; /* 20px */
 }
 
 #write-form label {
@@ -203,19 +203,19 @@ main {
 
 #write-form input, #write-form textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+    padding: 0.625rem; /* 10px */
+    border: 1px solid #ccc; /* border는 px 유지 */
+    border-radius: 0.3125rem; /* 5px */
+    box-sizing: border-box;
 }
 
 #write-form button {
     align-self: flex-start;
-    padding: 10px 20px;
+    padding: 0.625rem 1.25rem; /* 10px 20px */
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.3125rem; /* 5px */
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem; /* 16px */
 }
