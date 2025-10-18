@@ -293,7 +293,7 @@ function toggleMusic() {
 }
 
 // ===================================================
-// 5. 통합 일기장 (Blog + Calendar) 기능
+// 5. 통합 일기장 (Blog + Calendar) 기능 (최종 수정본)
 // ===================================================
 
 // 현재 달력이 보고 있는 날짜를 저장할 변수
@@ -317,20 +317,53 @@ function showDiary() {
     drawDiaryCalendar(diaryNavDate.getFullYear(), diaryNavDate.getMonth());
 }
 
-// 오른쪽 영역에 작은 달력을 그리는 함수
+// 오른쪽 영역에 드롭다운이 포함된 달력을 그리는 함수
 async function drawDiaryCalendar(year, month) {
     const calendarArea = document.getElementById('diary-calendar-area');
+
+    // --- 1. 년/월 드롭다운 HTML 생성 ---
+    let yearOptions = '';
+    const currentYear = new Date().getFullYear();
+    // 현재 년도 기준으로 앞뒤 10년 범위 설정 (필요시 조절 가능)
+    for (let i = currentYear - 10; i <= currentYear + 10; i++) { 
+        yearOptions += `<option value="${i}" ${i === year ? 'selected' : ''}>${i}년</option>`;
+    }
+
+    let monthOptions = '';
+    for (let i = 0; i <= 11; i++) { // 월은 0부터 11까지
+        monthOptions += `<option value="${i}" ${i === month ? 'selected' : ''}>${i + 1}월</option>`;
+    }
+
+    // --- 2. 달력 뼈대 HTML 설정 ---
     calendarArea.innerHTML = `
         <div id="calendar-header">
-            <button id="prev-month">◀</button>
-            <h3 id="month-year">${year}년 ${month + 1}월</h3>
-            <button id="next-month">▶</button>
+            <button id="prev-month">←</button>
+            <div id="date-select-wrapper">
+                <select id="year-select">${yearOptions}</select>
+                <select id="month-select">${monthOptions}</select>
+            </div>
+            <button id="next-month">→</button>
         </div>
         <div id="calendar-weekdays">
             <div id='sunday'>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div id='saturday'>土</div>
         </div>
         <div id="calendar-grid"></div>
     `;
+
+    // --- 3. 드롭다운 및 버튼에 이벤트 리스너 추가 ---
+    const yearSelect = document.getElementById('year-select');
+    const monthSelect = document.getElementById('month-select');
+
+    // 년/월 드롭다운이 변경될 때 실행될 함수
+    const handleDateChange = () => {
+        const newYear = parseInt(yearSelect.value, 10);
+        const newMonth = parseInt(monthSelect.value, 10);
+        diaryNavDate = new Date(newYear, newMonth, 1); // 날짜 객체 업데이트
+        drawDiaryCalendar(newYear, newMonth); // 달력 다시 그리기
+    };
+
+    yearSelect.addEventListener('change', handleDateChange);
+    monthSelect.addEventListener('change', handleDateChange);
 
     // 이전/다음 달 버튼 이벤트
     document.getElementById('prev-month').addEventListener('click', () => {
@@ -343,8 +376,9 @@ async function drawDiaryCalendar(year, month) {
     });
 
     const grid = document.getElementById('calendar-grid');
+    grid.innerHTML = '로딩 중...'; // 로딩 표시
 
-    // --- Supabase에서 게시글 데이터 가져오기 (기존 로직과 동일) ---
+    // --- 4. Supabase에서 게시글 데이터 가져오기 ---
     const startDate = new Date(year, month, 1).toISOString();
     const endDate = new Date(year, month + 1, 0, 23, 59, 59).toISOString();
 
@@ -366,9 +400,11 @@ async function drawDiaryCalendar(year, month) {
         postMap.set(postDate, post.id);
     });
 
-    // --- 달력 UI 그리기 (기존 로직과 동일) ---
+    // --- 5. 달력 UI 그리기 ---
     const firstDayOfMonth = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    grid.innerHTML = ''; // 그리드 비우기
 
     for (let i = 0; i < firstDayOfMonth; i++) {
         grid.appendChild(document.createElement('div')).className = 'calendar-day empty';

@@ -42,6 +42,19 @@
     #guestbook-form {
         flex-direction: column;
     }
+    /* === 모바일용 일기장 레이아웃 (추가) === */
+    .diary-layout {
+        flex-direction: column; /* 2단을 세로(1단)로 변경 */
+    }
+    #diary-post-content {
+        border-right: none; /* 오른쪽 구분선 제거 */
+        padding-right: 0;
+        border-bottom: 1px dashed #cfcfcf; /* 아래쪽 구분선 추가 */
+        padding-bottom: 1rem;
+    }
+    #diary-calendar-area {
+        min-width: 100%; /* 모바일에서 달력 너비 꽉 채우기 */
+    }
 }
 
 /* ============================================== */
@@ -260,6 +273,7 @@ main {
     font-size: 1.2rem; /* 아이콘 크기 */
     cursor: pointer;   /* 마우스를 올리면 손가락 모양으로 */
     user-select: none; /* 클릭 시 텍스트가 선택되지 않도록 */
+    color:#000
 }
 
 /* ============================================== */
@@ -274,20 +288,20 @@ main {
 
 /* 왼쪽 일기 내용 영역 (2/3 차지) */
 #diary-post-content {
-    flex: 3;
-    border-right: 1px dashed #cfcfcf; /* 님의 테마에 맞춘 점선 구분 */
+    flex: 2;
+    border-right: 1px dashed #cfcfcf; /* 구분선 */
     padding-right: 2rem;
-    color: #cfcfcf; /* 님의 테마 글자색 */
+    color: #cfcfcf; /* 님 테마 글자색 */
 }
 
 /* 오른쪽 달력 영역 (1/3 차지) */
 #diary-calendar-area {
     flex: 1;
-    min-width: 220px; /* 달력의 최소 너비 */
+    min-width: 240px; /* 달력 최소 너비 (조절 가능) */
 }
 
 /* ============================================== */
-/* 일기장 달력 (작은 버전) 스타일              */
+/* 일기장 달력 (드롭다운 포함) 스타일          */
 /* ============================================== */
 
 #calendar-header {
@@ -295,20 +309,30 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0;
-    color: #333; /* 달력 글자색 */
-}
-
-#calendar-header h3 {
-    font-size: 0.9rem;
     color: #333;
 }
 
 #calendar-header button {
     background: none;
     border: none;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
-    color: #9dbded;
+    color: #ccc;
+    padding: 0.8rem 1.2rem;
+}
+
+#date-select-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#calendar-header select {
+    padding: 0.25rem;
+    font-size: 0.9rem; /* 폰트 크기 조절 */
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    background-color: white;
+    color: #333;
 }
 
 #calendar-weekdays {
@@ -329,22 +353,22 @@ main {
     padding: 0.25rem;
     text-align: center;
     font-weight: bold;
-    font-size: 0.75rem; /* 0.8rem에서 0.75rem으로 줄임 (조절 가능) */
+    font-size: 0.75rem; /* 글자 크기 조절 */
 }
 
 #calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0;
+    gap: 2px;
 }
 
 .calendar-day {
-    padding: 0.25rem 0; /* 0.5rem에서 0.25rem으로 줄임 (조절 가능) */
+    padding: 0.25rem 0; /* 칸 크기 조절 */
     text-align: center;
     background-color: white;
-    font-size: 0.75rem; /* 0.8rem에서 0.75rem으로 줄임 (조절 가능) */
+    font-size: 0.75rem; /* 글자 크기 조절 */
     color: #555;
-    aspect-ratio: 1 / 1; /* 날짜 칸을 1:1 비율로 만듦 */
+    aspect-ratio: 1 / 1; 
     display: flex;
     justify-content: center;
     align-items: center;
