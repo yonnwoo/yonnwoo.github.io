@@ -298,3 +298,25 @@ function toggleMusic() {
         }
     }
 }
+// ===================================================
+// 5. 달력 보여주기 기능
+// ===================================================
+
+function showCalendar() {
+    // 1. mainContent 영역에 달력이 들어갈 컨테이너를 만듭니다.
+    mainContent.innerHTML = `
+        <h2>캘린더</h2>
+        <div id="my-calendar"></div>
+    `;
+
+    // 2. Vanilla JS Calendar 라이브러리를 사용해 달력을 생성합니다.
+    // DOM이 완전히 준비된 후에 실행되도록 잠시 기다립니다.
+    setTimeout(() => {
+        const calendar = new VanillaCalendar('#my-calendar', {
+            settings: {
+                lang: 'ko', // 언어를 한국어로 설정
+            }
+        });
+        calendar.init();
+    }, 0);
+}

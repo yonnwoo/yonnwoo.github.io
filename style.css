@@ -261,3 +261,33 @@ main {
     cursor: pointer;   /* 마우스를 올리면 손가락 모양으로 */
     user-select: none; /* 클릭 시 텍스트가 선택되지 않도록 */
 }
+
+/* ============================================== */
+/* Vanilla JS Calendar 스타일 오버라이드         */
+/* ============================================== */
+
+/* 달력 전체 컨테이너 */
+#my-calendar {
+    width: 100%;
+    max-width: 40rem; /* 달력이 너무 커지는 것을 방지 */
+    margin: 0 auto; /* 가운데 정렬 */
+    border: none;
+    color: #555; /* 님 테마에 맞게 글자색 변경 */
+}
+
+/* 달력 헤더 (월, 년도) */
+.vanilla-calendar-header {
+    background-color: #f9f9f9;
+    padding: 0.5rem;
+}
+
+/* 날짜(숫자) 스타일 */
+.vanilla-calendar-day__btn {
+    color: #555;
+}
+
+/* 오늘 날짜 스타일 */
+.vanilla-calendar-day__btn_today {
+    background-color: #9dbded !important;
+    color: white !important;
+}
