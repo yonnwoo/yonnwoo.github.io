@@ -323,6 +323,7 @@ function showDiary() {
         <div class="diary-layout">
             <div id="diary-post-content">
                 <h2>일기</h2>
+                <button id="write-button" class="admin-button" onclick="promptPassword()">글쓰기</button>
                 <p>오른쪽 달력에서 글을 쓴 날짜를 선택하세요.</p>
             </div>
             <div id="diary-calendar-area">
@@ -470,5 +471,28 @@ async function loadDiaryPost(postId) {
                 ${data.content.replace(/\n/g, '<br>')}
             </div>
         `;
+    }
+}
+// ===================================================
+// 6. 글쓰기 페이지 비밀번호 확인 기능
+// ===================================================
+
+function promptPassword() {
+    // 1. 여기에 사용할 비밀번호를 직접 입력하세요!
+    const correctPassword = "나만의 비밀번호"; // 예: "mySecret123"
+
+    // 2. 사용자에게 비밀번호를 묻는 창을 띄웁니다.
+    const enteredPassword = prompt("관리자 비밀번호를 입력하세요:");
+
+    // 3. 사용자가 입력했는지, 그리고 비밀번호가 맞는지 확인합니다.
+    if (enteredPassword === null) {
+        // 사용자가 '취소'를 눌렀을 경우 아무것도 하지 않음
+        return; 
+    } else if (enteredPassword === correctPassword) {
+        // 비밀번호가 맞으면 write.html 로 이동
+        window.location.href = "write.html"; 
+    } else {
+        // 비밀번호가 틀렸으면 경고 메시지 표시
+        alert("비밀번호가 틀렸습니다!");
     }
 }
