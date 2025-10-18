@@ -288,27 +288,23 @@ function onPlayerReady(event) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ID를 music-button-img 로 변경
-    const musicButtonImg = document.getElementById('music-button-img'); 
-    if (musicButtonImg) {
-        musicButtonImg.addEventListener('click', toggleMusic);
+    const musicButton = document.getElementById('music-button');
+    if (musicButton) {
+        musicButton.addEventListener('click', toggleMusic);
     }
 });
 
 function toggleMusic() {
     if (player && typeof player.getPlayerState === 'function') {
-        // ID를 music-button-img 로 변경
-        const musicButtonImg = document.getElementById('music-button-img'); 
+        const musicButton = document.getElementById('music-button');
         const playerState = player.getPlayerState();
 
         if (playerState === YT.PlayerState.PLAYING) {
             player.pauseVideo();
-            // src를 paused.gif 로 변경
-            musicButtonImg.src = 'images/paused.gif'; 
+            musicButton.textContent = '♪\uFE0E'; // 님의 아이콘 유지
         } else {
             player.playVideo();
-            // src를 playing.gif 로 변경
-            musicButtonImg.src = 'images/playing.gif'; 
+            musicButton.textContent = '♬\uFE0E'; // 님의 아이콘 유지
         }
     }
 }
