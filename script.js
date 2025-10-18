@@ -258,7 +258,7 @@ async function loadEntries() {
 // 4. 유튜브 배경 음악 제어 기능 (볼륨 수정 완료)
 // ===================================================
 
-const YOUTUBE_VIDEO_ID = 'ta4WEBJFX6k'; // 님의 영상 ID 유지
+const YOUTUBE_VIDEO_ID = '5DtO0QpEfnU'; // 님의 영상 ID 유지
 
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
