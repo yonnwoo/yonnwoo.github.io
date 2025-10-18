@@ -390,3 +390,61 @@ main {
 .calendar-day.active-date:hover {
     background-color: #e0f0ff;
 }
+/* ============================================== */
+/* 반응형 디자인을 위한 미디어 쿼리 (rem 단위)   */
+/* ============================================== */
+
+/* 화면 너비가 48rem(768px) 이하일 때 적용 */
+@media (max-width: 48rem) {
+
+    /* 헤더 스타일 변경 */
+    .main-header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        padding: 1rem 0.7rem; /* 15px 10px */
+        gap: 1rem; /* 15px */
+    }
+
+    /* 내비게이션 메뉴 컨테이너 */
+    .main-nav {
+        width: 100%;
+    }
+
+    /* 내비게이션 메뉴 목록 */
+    .main-nav ul {
+        justify-content: space-around;
+    }
+    
+    /* li 태그의 개별 margin */
+    .main-nav li {
+        margin: 0 0.625rem; /* 10px */
+    }
+
+    /* 메인 콘텐츠 영역 여백 */
+    main {
+        padding: 0.9375rem; /* 15px */
+    }
+    
+    h2 {
+        font-size: 1.5rem; /* 24px */
+    }
+
+    /* 방명록 폼을 모바일에서 세로로 쌓기 */
+    #guestbook-form {
+        flex-direction: column;
+    }
+    /* === 모바일용 일기장 레이아웃 (추가) === */
+    .diary-layout {
+        flex-direction: column; /* 2단을 세로(1단)로 변경 */
+    }
+    #diary-post-content {
+        border-right: none; /* 오른쪽 구분선 제거 */
+        padding-right: 0;
+        border-bottom: 1px dashed #cfcfcf; /* 아래쪽 구분선 추가 */
+        padding-bottom: 1rem;
+    }
+    #diary-calendar-area {
+        min-width: 100%; /* 모바일에서 달력 너비 꽉 채우기 */
+    }
+}
