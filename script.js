@@ -235,20 +235,18 @@ async function loadEntries() {
         entriesDiv.appendChild(entryDiv);
     });
 }
+
 // ===================================================
-// 4. 유튜브 배경 음악 제어 기능
+// 4. 유튜브 배경 음악 제어 기능 (볼륨 수정 완료)
 // ===================================================
 
-// 유튜브 영상 ID를 여기에 넣으세요 (저작권 없는 음악 추천!)
 const YOUTUBE_VIDEO_ID = 'ta4WEBJFX6k'; // 예시: Lofi Girl
 
-// 1. 유튜브 API 스크립트를 비동기적으로 로드합니다.
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 const firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// 2. API가 준비되면 이 함수가 호출되어 플레이어를 생성합니다.
 let player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtube-player', {
@@ -258,14 +256,27 @@ function onYouTubeIframeAPIReady() {
     playerVars: {
       'playsinline': 1,
       'loop': 1,
-      'playlist': YOUTUBE_VIDEO_ID, // loop를 위해 id를 한번 더 써줍니다.
-      'controls': 0 // 컨트롤러 숨기기
+      'playlist': YOUTUBE_VIDEO_ID,
+      'controls': 0
+    },
+    // ===== 수정된 부분 시작 =====
+    events: {
+      'onReady': onPlayerReady // 'onReady' 이벤트가 발생하면 onPlayerReady 함수를 호출
     }
+    // ===== 수정된 부분 끝 =====
   });
 }
 
-// 3. 음악 버튼에 클릭 이벤트 연결하기
-// DOM이 완전히 로드된 후에 실행되도록 해서 버튼을 확실히 찾도록 합니다.
+// ===== 추가된 함수 =====
+// 플레이어가 준비되면 볼륨을 설정하는 함수
+function onPlayerReady(event) {
+    // 0~100 사이의 값으로 볼륨 설정 (예: 30)
+    // 숫자를 10, 20 등으로 바꾸면 볼륨이 더 조절됩니다.
+    event.target.setVolume(30);
+}
+// ===== 추가된 함수 끝 =====
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const musicButton = document.getElementById('music-button');
     if (musicButton) {
@@ -273,19 +284,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// 4. 음악을 켜고 끄는 함수
 function toggleMusic() {
-    // player 객체가 준비되었는지 확인
     if (player && typeof player.getPlayerState === 'function') {
         const musicButton = document.getElementById('music-button');
         const playerState = player.getPlayerState();
 
         if (playerState === YT.PlayerState.PLAYING) {
-            player.pauseVideo(); // 재생 중이면 일시정지
-            musicButton.textContent = '⏸'; // 음소거 아이콘으로 변경
+            player.pauseVideo();
+            musicButton.textContent = '▶';
         } else {
-            player.playVideo(); // 정지 상태면 재생
-            musicButton.textContent = '♪'; // 소리 아이콘으로 변경
+            player.playVideo();
+            musicButton.textContent = '⏸';
         }
     }
 }
