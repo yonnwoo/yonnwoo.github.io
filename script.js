@@ -153,52 +153,69 @@ fetch(url)
     // ===================================================
 
 // ===================================================
-// ===================================================
-// 3. 방명록 기능 (Supabase 사용 - 완전한 자유!)
+// 3. 방명록 기능 (Supabase 사용 - 2단 레이아웃)
 // ===================================================
 
 // 방명록 화면을 보여주는 메인 함수
 function showGuestbook() {
-    // HTML 레이아웃은 Firebase 버전과 동일하게 사용합니다.
+    // 1. 2단 레이아웃 HTML 구조를 만듭니다.
     mainContent.innerHTML = `
-        <h3>방명록</h3>
-        <p>욕은 삼가해주세요</p>
-        
-        <form id="guestbook-form">
-            <input type="text" id="guest-name" placeholder="이름" required>
-            <textarea id="guest-message" placeholder="메시지를 입력하세요..." required></textarea>
-            <button type="submit">글 남기기</button>
-        </form>
-        
-        <div id="guestbook-entries">
-            <p>로딩 중...</p>
+        <div class="guestbook-layout"> 
+            <div id="guestbook-entries-area"> 
+                <h3>방명록</h3>
+                <div id="guestbook-entries">
+                    <p>로딩 중...</p> 
+                </div>
+            </div>
+            <div id="guestbook-form-area"> 
+                <h3>글 남기기</h3>
+                <p>욕은 삼가해주세요</p> 
+                <form id="guestbook-form">
+                    <input type="text" id="guest-name" placeholder="이름 (선택)">
+                    <textarea id="guest-message" placeholder="메시지를 입력하세요..." required></textarea>
+                    <button type="submit">글 남기기</button>
+                </form>
+            </div>
         </div>
     `;
 
+    // 2. 폼 제출 이벤트 연결 및 목록 로딩 (기존과 동일)
     document.getElementById('guestbook-form').addEventListener('submit', saveEntry);
     loadEntries();
 }
 
-// 폼에 작성된 글을 Supabase에 저장하는 함수
+// saveEntry 함수와 loadEntries 함수는 수정할 필요 없이 그대로 둡니다.
+// (loadEntries 함수는 이제 #guestbook-entries 영역에 목록을 채워넣을 것입니다.)
+
+// 폼에 작성된 글을 Supabase에 저장하는 함수 (익명 기능 추가)
 async function saveEntry(event) {
     event.preventDefault();
 
     const nameInput = document.getElementById('guest-name');
     const messageInput = document.getElementById('guest-message');
 
+    // 이름 입력값 가져오기 (앞뒤 공백 제거)
+    let nameToSave = nameInput.value.trim(); 
+
+    // 이름이 비어있으면 '익명'으로 설정
+    if (nameToSave === '') {
+        nameToSave = '비밀';
+    }
+
     // supabase.from("entries")는 "entries"라는 이름의 표를 의미
     const { data, error } = await supabase
         .from('entries')
         .insert([
-            { name: nameInput.value, message: messageInput.value }
+            // nameToSave 변수를 사용하여 저장
+            { name: nameToSave, message: messageInput.value.trim() } 
         ]);
 
     if (error) {
         console.error('저장 중 에러 발생:', error);
     } else {
         console.log('글이 성공적으로 저장되었습니다:', data);
-        nameInput.value = '';
-        messageInput.value = '';
+        nameInput.value = ''; // 이름 입력창 비우기
+        messageInput.value = ''; // 메시지 입력창 비우기
         loadEntries(); // 저장 후 목록 새로고침
     }
 }
@@ -279,15 +296,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function toggleMusic() {
     if (player && typeof player.getPlayerState === 'function') {
-        const musicButton = document.getElementById('music-button');
+        // ID를 music-button-img 로 변경
+        const musicButtonImg = document.getElementById('music-button-img'); 
         const playerState = player.getPlayerState();
 
         if (playerState === YT.PlayerState.PLAYING) {
             player.pauseVideo();
-            musicButton.textContent = '▶'; // 님의 아이콘 유지
+            // src를 paused.gif 로 변경
+            musicButtonImg.src = 'images/paused.gif'; 
         } else {
             player.playVideo();
-            musicButton.textContent = '⏸'; // 님의 아이콘 유지
+            // src를 playing.gif 로 변경
+            musicButtonImg.src = 'images/playing.gif'; 
         }
     }
 }

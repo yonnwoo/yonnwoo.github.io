@@ -1,61 +1,7 @@
 /* ============================================== */
-/* 반응형 디자인을 위한 미디어 쿼리 (rem 단위)   */
+/* Noto Sans KR 폰트 가져오기 (추가)           */
 /* ============================================== */
-
-/* 화면 너비가 48rem(768px) 이하일 때 적용 */
-@media (max-width: 48rem) {
-
-    /* 헤더 스타일 변경 */
-    .main-header {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 1rem 0.7rem; /* 15px 10px */
-        gap: 1rem; /* 15px */
-    }
-
-    /* 내비게이션 메뉴 컨테이너 */
-    .main-nav {
-        width: 100%;
-    }
-
-    /* 내비게이션 메뉴 목록 */
-    .main-nav ul {
-        justify-content: center;
-    }
-    
-    /* li 태그의 개별 margin */
-    .main-nav li {
-        margin: 0 0.625rem; /* 10px */
-    }
-
-    /* 메인 콘텐츠 영역 여백 */
-    main {
-        padding: 0.9375rem; /* 15px */
-    }
-    
-    h2 {
-        font-size: 1.5rem; /* 24px */
-    }
-
-    /* 방명록 폼을 모바일에서 세로로 쌓기 */
-    #guestbook-form {
-        flex-direction: column;
-    }
-    /* === 모바일용 일기장 레이아웃 (추가) === */
-    .diary-layout {
-        flex-direction: column; /* 2단을 세로(1단)로 변경 */
-    }
-    #diary-post-content {
-        border-right: none; /* 오른쪽 구분선 제거 */
-        padding-right: 0;
-        border-bottom: 1px dashed #cfcfcf; /* 아래쪽 구분선 추가 */
-        padding-bottom: 1rem;
-    }
-    #diary-calendar-area {
-        min-width: 100%; /* 모바일에서 달력 너비 꽉 채우기 */
-    }
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 
 /* ============================================== */
 /* 기본 스타일 (PC) (rem 단위)        */
@@ -391,6 +337,38 @@ main {
     background-color: #e0f0ff;
 }
 /* ============================================== */
+/* 방명록 (Guestbook) 2단 레이아웃 스타일     */
+/* ============================================== */
+
+.guestbook-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+/* 왼쪽 글 목록 영역 (2/3 차지) */
+#guestbook-entries-area {
+    flex: 2;
+    border-right: 1px dashed #cfcfcf; /* 구분선 */
+    padding-right: 2rem;
+}
+
+/* 오른쪽 글쓰기 폼 영역 (1/3 차지) */
+#guestbook-form-area {
+    flex: 1;
+    min-width: 220px; /* 폼 영역 최소 너비 */
+}
+
+/* 폼 스타일 재정의 (세로로 쌓기) */
+#guestbook-form-area #guestbook-form {
+    flex-direction: column;
+}
+#guestbook-form-area #guestbook-form input,
+#guestbook-form-area #guestbook-form textarea {
+    width: 100%; /* 너비 100% */
+    box-sizing: border-box; /* 패딩 포함 */
+}
+/* ============================================== */
 /* 반응형 디자인을 위한 미디어 쿼리 (rem 단위)   */
 /* ============================================== */
 
@@ -423,7 +401,7 @@ main {
 
     /* 메인 콘텐츠 영역 여백 */
     main {
-        padding: 0.9375rem; /* 15px */
+        padding: 1.25rem; /* 15px */
     }
     
     h2 {
@@ -446,5 +424,10 @@ main {
     }
     #diary-calendar-area {
         min-width: 100%; /* 모바일에서 달력 너비 꽉 채우기 */
+    }
+
+    /* === 모바일용 방명록 레이아웃 === */
+    .guestbook-layout {
+    flex-direction: column;
     }
 }
