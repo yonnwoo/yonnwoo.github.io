@@ -263,31 +263,78 @@ main {
 }
 
 /* ============================================== */
-/* Vanilla JS Calendar 스타일 오버라이드 (추가됨) */
+/* 커스텀 캘린더 스타일                         */
 /* ============================================== */
 
-/* 달력 전체 컨테이너 */
-#my-calendar {
+#calendar-container {
     width: 100%;
-    max-width: 40rem; /* 달력이 너무 커지는 것을 방지 */
-    margin: 0 auto; /* 가운데 정렬 */
-    border: none;
-    color: #555; /* 님 테마에 맞게 글자색 변경 */
+    max-width: 60rem;
+    margin: 1rem auto;
+    color: #333; /* 달력 글자색은 검은색 계열로 */
 }
 
-/* 달력 헤더 (월, 년도) */
-.vanilla-calendar-header {
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
     background-color: #f9f9f9;
+}
+
+#calendar-header h2 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+#calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #9dbded;
+}
+
+#calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f1f1f1;
+}
+
+#calendar-weekdays div {
     padding: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.875rem;
 }
 
-/* 날짜(숫자) 스타일 */
-.vanilla-calendar-day__btn {
-    color: #555;
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background-color: #e0e0e0; /* 칸막이 색 */
 }
 
-/* 오늘 날짜 스타일 */
-.vanilla-calendar-day__btn_today {
-    background-color: #9dbded !important;
-    color: white !important;
+.calendar-day {
+    min-height: 6rem;
+    padding: 0.5rem;
+    background-color: white;
+    font-size: 0.875rem;
+}
+
+.calendar-day.empty {
+    background-color: #f7f7f7;
+}
+
+.calendar-day.inactive-date {
+    color: #aaa; /* 글 없는 날 (비활성화) */
+}
+
+.calendar-day.active-date {
+    background-color: #f0f8ff; /* 글 있는 날 (활성화) */
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+}
+.calendar-day.active-date:hover {
+    background-color: #e0f0ff;
 }

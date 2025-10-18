@@ -293,24 +293,112 @@ function toggleMusic() {
 }
 
 // ===================================================
-// 5. 달력 보여주기 기능 (추가됨)
+// 5. 커스텀 일기장 달력 기능 (새로운 코드)
 // ===================================================
 
+// 현재 달력이 보고 있는 날짜를 저장할 변수 (초기값은 오늘)
+let navDate = new Date();
+
+// "Calendar" 메뉴 클릭 시 실행되는 메인 함수
 function showCalendar() {
-    // 1. mainContent 영역에 달력이 들어갈 컨테이너를 만듭니다.
+    // 1. 달력의 기본 뼈대를 HTML로 만듭니다.
     mainContent.innerHTML = `
-        <h2>캘린더</h2>
-        <div id="my-calendar"></div>
+        <div id="calendar-container">
+            <div id="calendar-header">
+                <button id="prev-month">◀</button>
+                <h2 id="month-year"></h2>
+                <button id="next-month">▶</button>
+            </div>
+            <div id="calendar-weekdays">
+                <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+            </div>
+            <div id="calendar-grid"></div>
+        </div>
     `;
 
-    // 2. Vanilla JS Calendar 라이브러리를 사용해 달력을 생성합니다.
-    // DOM이 완전히 준비된 후에 실행되도록 잠시 기다립니다.
-    setTimeout(() => {
-        const calendar = new VanillaCalendar('#my-calendar', {
-            settings: {
-                lang: 'ko', // 언어를 한국어로 설정
-            }
-        });
-        calendar.init();
-    }, 0);
+    // 2. 이전/다음 달 버튼에 클릭 이벤트를 연결합니다.
+    document.getElementById('prev-month').addEventListener('click', () => {
+        navDate.setMonth(navDate.getMonth() - 1); // 날짜를 한 달 전으로
+        drawCalendar(navDate.getFullYear(), navDate.getMonth()); // 달력을 다시 그림
+    });
+
+    document.getElementById('next-month').addEventListener('click', () => {
+        navDate.setMonth(navDate.getMonth() + 1); // 날짜를 한 달 후로
+        drawCalendar(navDate.getFullYear(), navDate.getMonth()); // 달력을 다시 그림
+    });
+
+    // 3. 처음 달력을 그립니다.
+    drawCalendar(navDate.getFullYear(), navDate.getMonth());
+}
+
+// 달력을 실제로 그리고 Supabase 데이터를 가져오는 핵심 함수
+async function drawCalendar(year, month) {
+    // 헤더에 'YYYY년 M월' 표시
+    const monthYearString = `${year}년 ${month + 1}월`;
+    document.getElementById('month-year').textContent = monthYearString;
+    
+    const grid = document.getElementById('calendar-grid');
+    grid.innerHTML = '로딩 중...'; // 데이터를 불러오는 동안 표시
+
+    // --- Supabase에서 현재 월의 게시글 데이터 가져오기 ---
+    
+    // 1. 이번 달의 시작일과 마지막일 계산
+    const startDate = new Date(year, month, 1).toISOString();
+    const endDate = new Date(year, month + 1, 0, 23, 59, 59).toISOString(); // 0일 = 이전 달의 마지막 날
+
+    // 2. Supabase의 'posts' 테이블에서 현재 월에 해당하는 글만 가져오기
+    const { data: posts, error } = await supabase
+        .from('posts')
+        .select('id, created_at, title')
+        .gte('created_at', startDate) // "Greater Than or Equal" (이상)
+        .lte('created_at', endDate);  // "Less Than or Equal" (이하)
+
+    if (error) {
+        console.error('게시글 로딩 중 에러:', error);
+        grid.innerHTML = '게시글을 불러오는 데 실패했습니다.';
+        return;
+    }
+
+    // 3. 불러온 데이터를 '날짜'를 키로, 'id'를 값으로 하는 Map으로 변환
+    const postMap = new Map();
+    posts.forEach(post => {
+        const postDate = new Date(post.created_at).getDate();
+        postMap.set(postDate, post.id);
+    });
+
+    // --- 달력 UI 그리기 ---
+    grid.innerHTML = ''; // '로딩 중...' 메시지 제거
+    
+    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0(일) ~ 6(토)
+    const daysInMonth = new Date(year, month + 1, 0).getDate(); // 이 달의 총 날짜 수
+
+    // 1. 첫째 날 시작 전의 빈 칸 채우기
+    for (let i = 0; i < firstDayOfMonth; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'calendar-day empty';
+        grid.appendChild(emptyCell);
+    }
+
+    // 2. 날짜 채우기 (1일부터 ~ 마지막 날까지)
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'calendar-day';
+        dayCell.textContent = day;
+
+        // 오늘 쓴 글이 있는지 확인
+        const postId = postMap.get(day);
+        
+        if (postId) {
+            // 글이 있는 날 (활성화)
+            dayCell.classList.add('active-date');
+            dayCell.title = '클릭해서 일기 보기';
+            // 클릭하면 기존에 만들어둔 showBlogPost 함수를 호출
+            dayCell.onclick = () => showBlogPost(postId);
+        } else {
+            // 글이 없는 날 (비활성화)
+            dayCell.classList.add('inactive-date');
+        }
+        
+        grid.appendChild(dayCell);
+    }
 }
