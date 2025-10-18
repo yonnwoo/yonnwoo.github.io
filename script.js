@@ -323,11 +323,11 @@ async function drawDiaryCalendar(year, month) {
     calendarArea.innerHTML = `
         <div id="calendar-header">
             <button id="prev-month">◀</button>
-            <h2 id="month-year">${year}년 ${month + 1}월</h2>
+            <h3 id="month-year">${year}년 ${month + 1}월</h3>
             <button id="next-month">▶</button>
         </div>
         <div id="calendar-weekdays">
-            <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+            <div id='sunday'>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div id='saturday'>土</div>
         </div>
         <div id="calendar-grid"></div>
     `;

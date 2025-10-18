@@ -118,7 +118,7 @@ main {
 
 #guestbook-form input, #guestbook-form textarea {
     padding: 0.625rem; /* 10px */
-    border: 1px dashed #cfcfcf; /* 오타 수정됨 */
+    border: 1px dashed #eee;
     border-radius: 0.3125rem; /* 5px */
 }
 
@@ -144,7 +144,7 @@ main {
 }
 
 .entry {
-    border-bottom: 1px solid #eee; /* border는 px 유지 */
+    border-bottom: 1px dashed #eee; /* border는 px 유지 */
     padding: 1rem 0; /* 15px 0 */
 }
 
@@ -274,7 +274,7 @@ main {
 
 /* 왼쪽 일기 내용 영역 (2/3 차지) */
 #diary-post-content {
-    flex: 2;
+    flex: 3;
     border-right: 1px dashed #cfcfcf; /* 님의 테마에 맞춘 점선 구분 */
     padding-right: 2rem;
     color: #cfcfcf; /* 님의 테마 글자색 */
@@ -283,7 +283,7 @@ main {
 /* 오른쪽 달력 영역 (1/3 차지) */
 #diary-calendar-area {
     flex: 1;
-    min-width: 280px; /* 달력의 최소 너비 */
+    min-width: 220px; /* 달력의 최소 너비 */
 }
 
 /* ============================================== */
@@ -298,8 +298,8 @@ main {
     color: #333; /* 달력 글자색 */
 }
 
-#calendar-header h2 {
-    font-size: 1.2rem;
+#calendar-header h3 {
+    font-size: 0.9rem;
     color: #333;
 }
 
@@ -317,24 +317,32 @@ main {
     color: #333;
 }
 
+#calendar-weekdays #sunday {
+    color: rgb(185, 131, 49)
+}
+
+#calendar-weekdays #saturday {
+    color: rgb(102, 227, 247)
+}
+
 #calendar-weekdays div {
     padding: 0.25rem;
     text-align: center;
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 0.75rem; /* 0.8rem에서 0.75rem으로 줄임 (조절 가능) */
 }
 
 #calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
+    gap: 0;
 }
 
 .calendar-day {
-    padding: 0.5rem 0;
+    padding: 0.25rem 0; /* 0.5rem에서 0.25rem으로 줄임 (조절 가능) */
     text-align: center;
     background-color: white;
-    font-size: 0.8rem;
+    font-size: 0.75rem; /* 0.8rem에서 0.75rem으로 줄임 (조절 가능) */
     color: #555;
     aspect-ratio: 1 / 1; /* 날짜 칸을 1:1 비율로 만듦 */
     display: flex;
@@ -351,11 +359,9 @@ main {
 }
 
 .calendar-day.active-date {
-    background-color: #f0f8ff;
     font-weight: bold;
-    color: #007bff;
+    color: #000;
     cursor: pointer;
-    border-radius: 50%; /* 활성화된 날짜를 동그랗게 */
 }
 .calendar-day.active-date:hover {
     background-color: #e0f0ff;
