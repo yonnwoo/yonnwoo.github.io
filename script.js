@@ -122,6 +122,7 @@ fetch(url)
     .then(data => {
         const weatherIcon = document.getElementById('weather-icon');
         const weatherId = data.weather[0].id; // 날씨 상태 코드
+        weatherIcon.className = ''; // 클래스 초기화
 
         if (weatherId >= 200 && weatherId < 300) {
             weatherIcon.innerText = '☈\uFE0E ☈\uFE0E ☈\uFE0E'; // 뇌우
@@ -240,7 +241,7 @@ async function loadEntries() {
 // 4. 유튜브 배경 음악 제어 기능 (볼륨 수정 완료)
 // ===================================================
 
-const YOUTUBE_VIDEO_ID = 'ta4WEBJFX6k'; // 예시: Lofi Girl
+const YOUTUBE_VIDEO_ID = 'ta4WEBJFX6k'; // 님의 영상 ID 유지
 
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -259,23 +260,15 @@ function onYouTubeIframeAPIReady() {
       'playlist': YOUTUBE_VIDEO_ID,
       'controls': 0
     },
-    // ===== 수정된 부분 시작 =====
     events: {
-      'onReady': onPlayerReady // 'onReady' 이벤트가 발생하면 onPlayerReady 함수를 호출
+      'onReady': onPlayerReady
     }
-    // ===== 수정된 부분 끝 =====
   });
 }
 
-// ===== 추가된 함수 =====
-// 플레이어가 준비되면 볼륨을 설정하는 함수
 function onPlayerReady(event) {
-    // 0~100 사이의 값으로 볼륨 설정 (예: 30)
-    // 숫자를 10, 20 등으로 바꾸면 볼륨이 더 조절됩니다.
-    event.target.setVolume(30);
+    event.target.setVolume(30); // 볼륨 30
 }
-// ===== 추가된 함수 끝 =====
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const musicButton = document.getElementById('music-button');
@@ -291,15 +284,16 @@ function toggleMusic() {
 
         if (playerState === YT.PlayerState.PLAYING) {
             player.pauseVideo();
-            musicButton.textContent = '▶';
+            musicButton.textContent = '▶'; // 님의 아이콘 유지
         } else {
             player.playVideo();
-            musicButton.textContent = '⏸';
+            musicButton.textContent = '⏸'; // 님의 아이콘 유지
         }
     }
 }
+
 // ===================================================
-// 5. 달력 보여주기 기능
+// 5. 달력 보여주기 기능 (추가됨)
 // ===================================================
 
 function showCalendar() {
