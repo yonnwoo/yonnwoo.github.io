@@ -288,9 +288,10 @@ function onPlayerReady(event) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const musicButton = document.getElementById('music-button');
-    if (musicButton) {
-        musicButton.addEventListener('click', toggleMusic);
+    // ID를 music-button-img 로 변경
+    const musicButtonImg = document.getElementById('music-button-img'); 
+    if (musicButtonImg) {
+        musicButtonImg.addEventListener('click', toggleMusic);
     }
 });
 
