@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        /* 로그인 폼 전용 스타일 */
+        #login-form { max-width: 400px; margin: 3rem auto; padding: 2rem; border: 1px dashed #ccc; }
+        #login-form label { display: block; margin-bottom: 0.5rem; }
+        #login-form input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; box-sizing: border-box;}
+        #login-message { color: red; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <main>
+        <form id="login-form">
+            <h2>관리자 로그인</h2>
+            <label for="email">이메일:</label>
+            <input type="email" id="email" required>
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" required>
+            <button type="submit">로그인</button>
+            <p id="login-message"></p>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        const SUPABASE_URL = 'https://iuvgxecoxpkhrklfaail.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1dmd4ZWNveHBraHJrbGZhYWlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2OTAwODksImV4cCI6MjA3NjI2NjA4OX0.lcyTqGEm6QV_Ogdlv0gzEKZQPFogE9psDhFzu1Q-G9Y'; // 본인 키로 변경
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const loginMessage = document.getElementById('login-message');
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            loginMessage.textContent = '로그인 시도 중...';
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Supabase에 이메일/비밀번호로 로그인 요청
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                loginMessage.textContent = `로그인 실패: ${error.message}`;
+            } else {
+                loginMessage.textContent = '로그인 성공! 글쓰기 페이지로 이동합니다.';
+                // 로그인 성공 시 write.html로 이동
+                window.location.href = 'write.html';
+            }
+        });
+    </script>
+</body>
+</html>

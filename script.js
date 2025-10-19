@@ -323,7 +323,6 @@ function showDiary() {
         <div class="diary-layout">
             <div id="diary-post-content">
                 <h2>일기</h2>
-                <button id="write-button" class="admin-button" onclick="promptPassword()">글쓰기</button>
                 <p>오른쪽 달력에서 글을 쓴 날짜를 선택하세요.</p>
             </div>
             <div id="diary-calendar-area">
@@ -339,11 +338,11 @@ function showDiary() {
 async function drawDiaryCalendar(year, month) {
     const calendarArea = document.getElementById('diary-calendar-area');
 
-    // --- 1. 년/월 드롭다운 HTML 생성 ---
+// --- 1. 년/월 드롭다운 HTML 생성 ---
     let yearOptions = '';
     const currentYear = new Date().getFullYear();
-    // 현재 년도 기준으로 앞뒤 10년 범위 설정 (필요시 조절 가능)
-    for (let i = currentYear - 10; i <= currentYear + 10; i++) { 
+    // 시작 년도를 1990으로 변경 (원하는 년도로 조절 가능)
+    for (let i = 1990; i <= currentYear + 10; i++) { 
         yearOptions += `<option value="${i}" ${i === year ? 'selected' : ''}>${i}년</option>`;
     }
 
@@ -435,10 +434,18 @@ async function drawDiaryCalendar(year, month) {
 
         const postId = postMap.get(day);
         
-        if (postId) {
+        // ⭐ 비밀 날짜 확인 (1997년 8월 4일) ⭐
+        if (year === 1997 && month === 7 && day === 4) { // month는 0부터 시작하므로 8월은 7
+            dayCell.classList.add('secret-date'); // 특별한 스타일을 위한 클래스 (선택 사항)
+            dayCell.title = '🤫'; // 마우스 올리면 보이는 힌트 (선택 사항)
+            // 클릭하면 비밀 버튼 보여주는 함수 호출
+            dayCell.onclick = () => showSecretWriteButton(postId); 
+        } else if (postId) {
+            // 일반 글 있는 날
             dayCell.classList.add('active-date');
-            dayCell.onclick = () => loadDiaryPost(postId); // 클릭 시 loadDiaryPost 호출
+            dayCell.onclick = () => loadDiaryPost(postId);
         } else {
+            // 글 없는 날
             dayCell.classList.add('inactive-date');
         }
         grid.appendChild(dayCell);
@@ -468,31 +475,84 @@ async function loadDiaryPost(postId) {
             <h2>${data.title}</h2>
             <p class="post-meta">작성일: ${new Date(data.created_at).toLocaleString()}</p>
             <div class="post-content">
-                ${data.content.replace(/\n/g, '<br>')}
+                ${data.content} 
             </div>
         `;
     }
 }
 // ===================================================
-// 6. 글쓰기 페이지 비밀번호 확인 기능
+// 6. 글쓰기 페이지 이동 기능 (인증 사용)
 // ===================================================
 
-function promptPassword() {
-    // 1. 여기에 사용할 비밀번호를 직접 입력하세요!
-    const correctPassword = "나만의 비밀번호"; // 예: "mySecret123"
+async function goToWritePage() {
+    // 현재 로그인 상태 확인
+    const { data: { session }, error } = await supabase.auth.getSession();
 
-    // 2. 사용자에게 비밀번호를 묻는 창을 띄웁니다.
-    const enteredPassword = prompt("관리자 비밀번호를 입력하세요:");
-
-    // 3. 사용자가 입력했는지, 그리고 비밀번호가 맞는지 확인합니다.
-    if (enteredPassword === null) {
-        // 사용자가 '취소'를 눌렀을 경우 아무것도 하지 않음
-        return; 
-    } else if (enteredPassword === correctPassword) {
-        // 비밀번호가 맞으면 write.html 로 이동
-        window.location.href = "write.html"; 
-    } else {
-        // 비밀번호가 틀렸으면 경고 메시지 표시
-        alert("비밀번호가 틀렸습니다!");
+    if (error) {
+        console.error("로그인 상태 확인 중 에러:", error);
+        alert("오류가 발생했습니다. 다시 시도해주세요.");
+        return;
     }
+
+    if (session) {
+        // 이미 로그인되어 있다면 바로 write.html 로 이동
+        window.location.href = 'write.html';
+    } else {
+        // 로그인되어 있지 않다면 login.html 로 이동
+        window.location.href = 'login.html';
+    }
+}
+
+// ===================================================
+// 7. 비밀 글쓰기 버튼 보여주기 기능 (수정 완료)
+// ===================================================
+
+async function showSecretWriteButton(postId) {
+    // ⭐ postContentDiv 변수를 여기서 정의합니다! ⭐
+    const postContentDiv = document.getElementById('diary-post-content');
+    
+    // 요소가 존재하는지 확인 후 진행
+    if (!postContentDiv) {
+        console.error("ID 'diary-post-content'를 찾을 수 없습니다.");
+        return; 
+    }
+
+    postContentDiv.innerHTML = `<p>데이터 확인 중...</p>`; 
+
+    // postId가 있다면 해당 글을 불러옵니다 (없을 수도 있음)
+    if (postId) {
+        const { data, error } = await supabase
+            .from('posts')
+            .select('*')
+            .eq('id', postId)
+            .single();
+
+        if (error && error.code !== 'PGRST116') { // "PGRST116" = 해당 ID의 글이 없는 경우의 에러 코드
+            console.error('비밀 날짜 글 로딩 중 에러:', error);
+            postContentDiv.innerHTML = '<p>비밀의 날...</p>'; 
+        } else if (data) {
+            // 글 내용 표시
+            postContentDiv.innerHTML = `
+                <h2>${data.title}</h2>
+                <p class="post-meta">작성일: ${new Date(data.created_at).toLocaleString()}</p>
+                <div class="post-content">
+                    ${data.content.replace(/\n/g, '<br>')}
+                </div>
+            `;
+        } else {
+            // 해당 날짜에 글은 없지만 비밀 날짜인 경우
+             postContentDiv.innerHTML = '<p>특별한 날입니다...</p>';
+        }
+    } else {
+        // 해당 날짜에 글 자체가 없는 경우
+        postContentDiv.innerHTML = '<p>1997년 8월 4일</p>';
+    }
+
+    // --- 여기에만 글쓰기 버튼 추가 ---
+    const writeButton = document.createElement('button');
+    writeButton.textContent = '글쓰러 가기';
+    writeButton.className = 'admin-button diary-write-button'; 
+    writeButton.onclick = goToWritePage; // goToWritePage 함수 호출
+
+    postContentDiv.appendChild(writeButton); // 버튼 추가
 }
