@@ -466,11 +466,11 @@ main {
 /* 떨어지는 애니메이션 정의 (@keyframes rain-fall) 는 그대로 둡니다 */
 @keyframes rain-fall {
     0% {
-        transform: translateY(-50px);
+        transform: translateY(-10vh); /* 화면 높이 기준 위에서 시작 */
         opacity: 1;
     }
     100% {
-        transform: translateY(1000px); /* 이전 설정 유지 (더 아래까지) */
+        transform: translateY(90vh); /* 화면 높이 기준 아래로 사라짐 */
         opacity: 0;
     }
 }
@@ -499,7 +499,7 @@ main {
 .raining-char {
     position: absolute; 
     opacity: 0; 
-    color: #eee; 
+    color: #ccc; 
 
     animation-name: rain-fall;
     animation-timing-function: linear; 
