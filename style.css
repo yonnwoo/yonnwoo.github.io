@@ -436,3 +436,66 @@ main {
     flex-direction: column;
     }
 }
+/* ============================================== */
+/* 텍스트 회전 애니메이션                       */
+/* ============================================== */
+
+/* 회전 애니메이션 정의 */
+@keyframes spin {
+    from {
+        transform: rotate(0deg); /* 0도에서 시작 */
+    }
+    to {
+        transform: rotate(360deg); /* 360도 회전하며 끝 (한 바퀴) */
+    }
+}
+
+/* 애니메이션 적용 대상 */
+.spinning-text {
+    display: inline-block; /* span 태그에 transform을 적용하기 위해 */
+    animation-name: spin;          /* 사용할 애니메이션 이름 */
+    animation-duration: 5s;        /* 한 바퀴 도는 데 걸리는 시간 (5초) */
+    animation-timing-function: linear; /* 처음부터 끝까지 같은 속도로 */
+    animation-iteration-count: infinite; /* 무한 반복 */
+}
+
+/* ============================================== */
+/* 비 내리는 텍스트 애니메이션                  */
+/* ============================================== */
+
+/* 떨어지는 애니메이션 정의 */
+@keyframes rain-fall {
+    0% {
+        transform: translateY(-50px); 
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(1000px); /* 떨어지는 거리를 150px에서 300px로 늘림 (원하는 만큼 조절) */
+        opacity: 0;
+    }
+}
+/* 애니메이션을 적용할 전체 컨테이너 */
+.hometext.raining-text-container {
+    text-align: center; 
+    font-size: 1.5rem; 
+    min-height: 80vh; /* 화면 높이(Viewport Height)의 80% 만큼 높이 확보 (조절 가능) */
+    overflow: hidden; 
+    position: relative; 
+}
+
+/* 각 글자 span 태그 스타일 (수정됨) */
+.raining-char {
+    /* display: inline-block; 제거 */
+    position: absolute; /* JS에서 설정한 left 값으로 위치 잡음 */
+    opacity: 0; 
+    /* left: calc(...); 제거 */
+    color: #eee; /* 비 색깔 (선택 사항) */
+
+    /* 애니메이션 적용 */
+    animation-name: rain-fall;
+    /* animation-duration은 JS에서 개별 설정 */
+    animation-timing-function: linear; 
+    animation-iteration-count: infinite; 
+    animation-fill-mode: both;
+    /* animation-delay는 JS에서 개별 설정 */
+}
