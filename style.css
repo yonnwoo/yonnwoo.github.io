@@ -384,7 +384,7 @@ main {
     .main-header {
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: space-around;
         padding: 1rem 0.7rem; /* 15px 10px */
         gap: 1rem; /* 15px */
     }
