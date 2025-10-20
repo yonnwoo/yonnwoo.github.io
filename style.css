@@ -469,6 +469,10 @@ main {
         transform: translateY(-10vh); /* 화면 높이 기준 위에서 시작 */
         opacity: 1;
     }
+    50% {
+        transform: translateY(-10vh); /* 화면 높이 기준 위에서 시작 */
+        opacity: 0.6;
+    }
     100% {
         transform: translateY(90vh); /* 화면 높이 기준 아래로 사라짐 */
         opacity: 0;
