@@ -15,9 +15,9 @@ function showHome() {
     // `<pre>` 태그로 감싸서 공백과 줄바꿈을 유지하고, ID를 부여합니다.
     const characterHTML = `
         <pre id="rainy-char">
-……(\\_/)
+……(\\/)
 ……(‘’)
-•.(,()()¤°
+•.(()()¤°
         </pre>
     `;
 
