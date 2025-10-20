@@ -479,9 +479,9 @@ main {
 .hometext.raining-text-container {
     /* text-align 제거 또는 left로 변경 */
     font-size: 1.5rem; 
-    min-height: 80vh; /* 이전 설정 유지 (높게) */
+    height: calc(90vh - 100px); /* 화면 높이의 90%에서 헤더 높이(대략 100px)를 뺀 값 (조절 필요) */
     overflow: hidden; 
-    position: relative; /* 자식 요소(span, pre)의 기준점 */
+    position: relative; 
 }
 
 /* 아스키 아트 캐릭터 스타일 (추가) */
