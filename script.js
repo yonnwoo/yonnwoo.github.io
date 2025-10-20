@@ -5,33 +5,45 @@
 // 콘텐츠가 표시될 main 영역을 가져와서 변수에 저장
 const mainContent = document.getElementById('main-content');
 
-// 'Home' 콘텐츠에 비 내리는 ':' 효과를 적용하는 함수 (수정)
+// 'Home' 콘텐츠에 비 내리는 ':' 효과와 캐릭터를 적용하는 함수 (수정)
 function showHome() {
-    // 1. 다른 타이머 중지 (필요시)
-    // if (homeIntervalId) { clearInterval(homeIntervalId); homeIntervalId = null; }
+    // 1. 비 효과 설정
+    const rainChar = ':';
+    const numberOfDrops = 30;
 
-    // 2. 비 효과를 위한 설정
-    const rainChar = '|'; // 떨어지는 문자
-    const numberOfDrops = 30; // 떨어지는 문자 개수 (조절 가능)
+    // 2. 아스키 아트 친구 HTML
+    // `<pre>` 태그로 감싸서 공백과 줄바꿈을 유지하고, ID를 부여합니다.
+    const characterHTML = `
+        <pre id="rainy-char">
+……(\\_/)
+……(‘’)
+•.(,()()¤°
+        </pre>
+    `;
 
     // 3. 떨어지는 문자들을 담을 HTML 생성
-    let rainingHTML = "<div class='hometext raining-text-container'>"; // 전체 컨테이너
+    let rainingSpansHTML = ""; // span 태그만 담을 변수
     for (let i = 0; i < numberOfDrops; i++) {
-        const randomDelay = Math.random() * 5; // 0초 ~ 5초 사이의 지연 (더 길게)
-        const randomDuration = 1 + Math.random() * 5; // 1초 ~ 6초 사이의 속도
-        const randomLeft = Math.random() * 100; // 0% ~ 100% 사이의 가로 위치
+        const randomDelay = Math.random() * 5; 
+        const randomDuration = 3 + Math.random() * 3; // 느린 속도 유지
+        const randomLeft = Math.random() * 100;
 
-        rainingHTML += `<span class="raining-char" style="left: ${randomLeft}%; animation-delay: ${randomDelay}s; animation-duration: ${randomDuration}s;">${rainChar}</span>`;
+        rainingSpansHTML += `<span class="raining-char" style="left: ${randomLeft}%; animation-delay: ${randomDelay}s; animation-duration: ${randomDuration}s;">${rainChar}</span>`;
     }
-    rainingHTML += "</div>";
 
-    // 4. 생성된 HTML을 mainContent에 넣기
-    mainContent.innerHTML = rainingHTML;
+    // 4. 전체 컨테이너 HTML 안에 캐릭터와 비 span들을 합쳐서 넣기
+    const finalHTML = `
+        <div class='hometext raining-text-container'>
+            ${characterHTML} 
+            ${rainingSpansHTML}
+        </div>
+    `;
+
+    // 5. 생성된 HTML을 mainContent에 넣기
+    mainContent.innerHTML = finalHTML;
 }
 
-// ⭐ 중요: 다른 show... 함수들(showAbout, showDiary, showGuestbook) 맨 윗줄에
-// 혹시 이전에 추가했던 타이머 중지 코드(if (homeIntervalId)...)가 있다면
-// 이제 필요 없으니 삭제해주세요!
+// ⭐ 중요: 다른 show... 함수들의 타이머 중지 코드는 여전히 필요 없습니다 ⭐
 
 // 'About' 콘텐츠를 보여주는 함수
 function showAbout() {

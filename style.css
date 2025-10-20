@@ -463,39 +463,46 @@ main {
 /* 비 내리는 텍스트 애니메이션                  */
 /* ============================================== */
 
-/* 떨어지는 애니메이션 정의 */
+/* 떨어지는 애니메이션 정의 (@keyframes rain-fall) 는 그대로 둡니다 */
 @keyframes rain-fall {
     0% {
-        transform: translateY(-50px); 
+        transform: translateY(-50px);
         opacity: 1;
     }
     100% {
-        transform: translateY(1000px); /* 떨어지는 거리를 150px에서 300px로 늘림 (원하는 만큼 조절) */
+        transform: translateY(1000px); /* 이전 설정 유지 (더 아래까지) */
         opacity: 0;
     }
 }
-/* 애니메이션을 적용할 전체 컨테이너 */
+
+/* 애니메이션을 적용할 전체 컨테이너 (수정) */
 .hometext.raining-text-container {
-    text-align: center; 
+    /* text-align 제거 또는 left로 변경 */
     font-size: 1.5rem; 
-    min-height: 80vh; /* 화면 높이(Viewport Height)의 80% 만큼 높이 확보 (조절 가능) */
+    min-height: 80vh; /* 이전 설정 유지 (높게) */
     overflow: hidden; 
-    position: relative; 
+    position: relative; /* 자식 요소(span, pre)의 기준점 */
 }
 
-/* 각 글자 span 태그 스타일 (수정됨) */
-.raining-char {
-    /* display: inline-block; 제거 */
-    position: absolute; /* JS에서 설정한 left 값으로 위치 잡음 */
-    opacity: 0; 
-    /* left: calc(...); 제거 */
-    color: #eee; /* 비 색깔 (선택 사항) */
+/* 아스키 아트 캐릭터 스타일 (추가) */
+#rainy-char {
+    position: absolute; /* 컨테이너 내에서 위치 지정 */
+    bottom: 1rem;       /* 아래쪽에 배치 (조절 가능) */
+    left: 1rem;         /* 왼쪽에 배치 (조절 가능) */
+    color: #cfcfcf;     /* 님 테마 색상 */
+    font-size: 1rem;    /* 캐릭터 크기 (조절 가능) */
+    line-height: 1.2;   /* 줄 간격 조절 */
+    z-index: 10;        /* 비보다 앞에 보이도록 (선택 사항) */
+}
 
-    /* 애니메이션 적용 */
+/* 각 글자 span 태그 스타일 */
+.raining-char {
+    position: absolute; 
+    opacity: 0; 
+    color: #eee; 
+
     animation-name: rain-fall;
-    /* animation-duration은 JS에서 개별 설정 */
     animation-timing-function: linear; 
     animation-iteration-count: infinite; 
     animation-fill-mode: both;
-    /* animation-delay는 JS에서 개별 설정 */
 }
