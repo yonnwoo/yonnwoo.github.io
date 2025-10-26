@@ -8,8 +8,8 @@ const mainContent = document.getElementById('main-content');
 // 'Home' 콘텐츠에 비 내리는 ':' 효과와 캐릭터를 적용하는 함수 (수정)
 function showHome() {
     // 1. 비 효과 설정
-    const rainChar = ':';
-    const numberOfDrops = 30;
+    const rainChar = '*';
+    const numberOfDrops = 20;
 
     // 2. 아스키 아트 친구 HTML
     // `<pre>` 태그로 감싸서 공백과 줄바꿈을 유지하고, ID를 부여합니다.
@@ -25,7 +25,7 @@ function showHome() {
     let rainingSpansHTML = ""; // span 태그만 담을 변수
     for (let i = 0; i < numberOfDrops; i++) {
         const randomDelay = Math.random() * 5; 
-        const randomDuration = 3 + Math.random() * 3; // 느린 속도 유지
+        const randomDuration = 20 + Math.random() * 2; // 느린 속도 유지
         const randomLeft = Math.random() * 100;
 
         rainingSpansHTML += `<span class="raining-char" style="left: ${randomLeft}%; animation-delay: ${randomDelay}s; animation-duration: ${randomDuration}s;">${rainChar}</span>`;
@@ -48,7 +48,9 @@ function showHome() {
 // 'About' 콘텐츠를 보여주는 함수
 function showAbout() {
     mainContent.innerHTML = `
-        <p>저에 대한 소개를 적는 공간입니다.</p>
+        <pre>
+안녕하세요?
+        </pre>
     `;
 }
 
@@ -114,7 +116,7 @@ async function showBlogPost(postId) {
     if (data) {
         mainContent.innerHTML = `
             <div class="post-view">
-                <h2>${data.title}</h2>
+                <p class="post-title">${data.title}</p>
                 <p class="post-meta">작성일: ${new Date(data.created_at).toLocaleString()}</p>
                 <div class="post-content">
                     ${data.content.replace(/\n/g, '<br>')}
@@ -503,7 +505,7 @@ async function loadDiaryPost(postId) {
     if (data) {
         // 왼쪽 영역의 HTML만 교체
         postContentDiv.innerHTML = `
-            <h2>${data.title}</h2>
+            <p class="post-title">${data.title}</p>
             <p class="post-meta">작성일: ${new Date(data.created_at).toLocaleString()}</p>
             <div class="post-content">
                 ${data.content} 

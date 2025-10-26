@@ -134,11 +134,17 @@ main {
     padding: 0.625rem; /* 10px */
 }
 
-.post-view .post-meta {
-    font-size: 0.875rem; /* 14px */
+.post-title {
+    font-size: 1.5rem; /* 14px */
+    color: #cfcfcf;
+}
+
+.post-meta {
+    font-size: 0.75rem; /* 14px */
     color: #cfcfcf;
     margin-bottom: 1.25rem; /* 20px */
 }
+
 
 .post-view .post-content {
     line-height: 1.6;
@@ -494,7 +500,7 @@ main {
     bottom: 1rem;       /* 아래쪽에 배치 (조절 가능) */
     left: 1rem;         /* 왼쪽에 배치 (조절 가능) */
     color: #cfcfcf;     /* 님 테마 색상 */
-    font-size: 0.6rem;    /* 캐릭터 크기 (조절 가능) */
+    font-size: 0.7rem;    /* 캐릭터 크기 (조절 가능) */
     line-height: 1.2;   /* 줄 간격 조절 */
     z-index: 10;        /* 비보다 앞에 보이도록 (선택 사항) */
 }
